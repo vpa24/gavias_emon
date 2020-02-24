@@ -1,0 +1,366 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a paragraph.
+ *
+ * Available variables:
+ * - paragraph: Full paragraph entity.
+ *   Only method names starting with "get", "has", or "is" and a few common
+ *   methods such as "id", "label", and "bundle" are available. For example:
+ *   - paragraph.getCreatedTime() will return the paragraph creation timestamp.
+ *   - paragraph.id(): The paragraph ID.
+ *   - paragraph.bundle(): The type of the paragraph, for example, "image" or "text".
+ *   - paragraph.getOwnerId(): The user ID of the paragraph author.
+ *   See Drupal\paragraphs\Entity\Paragraph for a full list of public properties
+ *   and methods for the paragraph object.
+ * - content: All paragraph items. Use {{ content }} to print them all,
+ *   or print a subset such as {{ content.field_example }}. Use
+ *   {{ content|without('field_example') }} to temporarily suppress the printing
+ *   of a given child element.
+ * - attributes: HTML attributes for the containing element.
+ *   The attributes.class element may contain one or more of the following
+ *   classes:
+ *   - paragraphs: The current template type (also known as a "theming hook").
+ *   - paragraphs--type-[type]: The current paragraphs type. For example, if the paragraph is an
+ *     "Image" it would result in "paragraphs--type--image". Note that the machine
+ *     name will often be in a short form of the human readable label.
+ *   - paragraphs--view-mode--[view_mode]: The View Mode of the paragraph; for example, a
+ *     preview would result in: "paragraphs--view-mode--preview", and
+ *     default: "paragraphs--view-mode--default".
+ * - view_mode: View mode; for example, "preview" or "full".
+ * - logged_in: Flag for authenticated user status. Will be true when the
+ *   current user is a logged-in member.
+ * - is_admin: Flag for admin user status. Will be true when the current user
+ *   is an administrator.
+ *
+ * @see template_preprocess_paragraph()
+ *
+ * @ingroup themeable
+ */
+#}
+{% if content.field_hide_flag['#items'][0].getString() != '1' %}
+
+{%
+  set classes = [
+    'paragraph',
+    'paragraph--type--' ~ paragraph.bundle|clean_class,
+    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+  ]
+%}
+{% block paragraph %}
+  <div{% if content.field_id['#items'][0].getString() is not empty %} id="{{ content.field_id['#items'][0].getString() }}"{% endif %}{{ attributes.addClass(classes) }} style="clear: left">
+    {% block content %}
+
+        {% if content.field_title.0 is not empty %}
+          <h2 class="block-title" style="margin-bottom: 0px"><span>{{ content.field_title }}</span></h2>
+        {% endif %}
+
+
+        {% if content.field_group_by_type['#items'][0].getString() != '1' %}
+            <div class="thumbnail-list {{ content.field_layout['#items'][0].getString()|lower|replace({' ': "-"}) }}">
+                {% for key, item in content.field_thumbnail if key|first != '#' %}
+                  {% if content.field_thumbnail[loop.index0]['#paragraph'].field_show_on.value != 'desktop' %}
+                      <div class="thumbnail-item">
+                          {{ content.field_thumbnail[loop.index0] }}
+                      </div>
+                  {% endif %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- <GROUP_BY_TYPE> -->
+
+<style>
+#accordion.wrap {
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+}
+
+#accordion .panel {
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  border-color: #fff;
+  background: none;
+  box-shadow: none;
+}
+
+#accordion .panel:last-child {
+  border-bottom: none;
+}
+
+#accordion.panel-group > .panel:first-child .panel-heading {
+  border-radius: 4px 4px 0 0;
+}
+
+#accordion.panel-group .panel {
+  border-radius: 0;
+}
+
+#accordion.panel-group .panel + .panel {
+  margin-top: 0;
+}
+
+#accordion .panel-heading {
+  background-color: #f5f5f5;
+  border-radius: 0;
+  border: none;
+  color: black;
+  padding: 0;
+}
+
+#accordion .panel-title a {
+  display: block;
+  color: black;
+  padding: 15px;
+  position: relative;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+#accordion .panel-body {
+  background: #fff;
+}
+
+#accordion .panel:last-child .panel-body {
+  border-radius: 0 0 4px 4px;
+}
+
+#accordion .panel:last-child .panel-heading {
+  border-radius: 0 0 4px 4px;
+  transition: border-radius 0.3s linear 0.2s;
+}
+
+#accordion .panel:last-child .panel-heading.active {
+  border-radius: 0;
+  transition: border-radius linear 0s;
+}
+
+#accordion.panel-group {
+  margin-top: 15px;
+}
+
+#accordion .panel-heading a:before {
+  content: '\f106';
+  font-size: 24px;
+  position: absolute;
+  font-family: 'FontAwesome';
+  right: 5px;
+  top: 10px;
+  transform: rotate(180deg);
+  transition: all 0.5s;
+}
+
+#accordion .panel-heading.active a:before {
+  transform: rotate(0deg);
+  transition: all 0.5s;
+}
+
+#accordion .thumbnail-item {
+    flex: 0;
+    -webkit-flex: 0;
+    -ms-flex: 0;
+    flex-basis: 20%;
+}
+
+@media (max-width: 990px) {
+  #accordion .thumbnail-item {
+    flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  #accordion .thumbnail-list {
+    display: block;
+  }
+}
+</style>
+
+
+            <div class="panel-group wrap" id="accordion" role="tablist" aria-multiselectable="true">
+
+              {% set isSet = 0 %}
+
+              <!-- video -->
+              {% for key, item in content.field_thumbnail if key|first != '#' %}
+                {% if content.field_thumbnail[loop.index0]['#paragraph'].field_youtube_video is not empty %}
+                  {% if isSet == 0 %}
+                    {% set isSet = 1 %}
+
+                      <div class="panel">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                          <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                              Videos
+                            </a>
+                          </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                          <div class="panel-body thumbnail-list">
+                  {% endif %}
+
+                            <div class="thumbnail-item">
+                              {{ content.field_thumbnail[loop.index0] }}
+                            </div>
+                {% endif %}
+              {% endfor %}
+              {% if isSet == 1 %}
+                {% set isSet = 0 %}
+                          </div>
+                        </div>
+                      </div>    <!-- end of panel -->
+              {% endif %}
+
+              <!-- whitepaper -->
+              {% for key, item in content.field_thumbnail if key|first != '#' %}
+                {% if content.field_thumbnail[loop.index0]['#paragraph'].field_type.value == 'whitepaper' and
+                      content.field_thumbnail[loop.index0]['#paragraph'].field_show_on.value != 'desktop'   %}
+                  {% if isSet == 0 %}
+                    {% set isSet = 1 %}
+
+    <div class="panel">
+        <div class="panel-heading" role="tab" id="headingTwo">
+            <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Whitepaper
+        </a>
+      </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                  <div class="panel-body  thumbnail-list">
+
+
+                  {% endif %}
+                            <div class="thumbnail-item">
+                                {{ content.field_thumbnail[loop.index0] }}
+                            </div>
+                {% endif %}
+              {% endfor %}
+              {% if isSet == 1 %}
+                {% set isSet = 0 %}
+                      </div>
+                    </div>
+                  </div>
+              {% endif %}
+
+
+              <!-- brochure -->
+              {% for key, item in content.field_thumbnail if key|first != '#' %}
+                {% if content.field_thumbnail[loop.index0]['#paragraph'].field_type.value == 'brochure' and
+                      content.field_thumbnail[loop.index0]['#paragraph'].field_show_on.value != 'desktop'   %}
+                  {% if isSet == 0 %}
+                    {% set isSet = 1 %}
+
+    <div class="panel">
+        <div class="panel-heading" role="tab" id="headingThree">
+            <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Brochure
+        </a>
+      </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                  <div class="panel-body  thumbnail-list">
+
+
+                  {% endif %}
+                            <div class="thumbnail-item">
+                                {{ content.field_thumbnail[loop.index0] }}
+                            </div>
+                {% endif %}
+              {% endfor %}
+              {% if isSet == 1 %}
+                {% set isSet = 0 %}
+                      </div>
+                    </div>
+                  </div>
+              {% endif %}
+
+
+                <!-- flyer -->
+                {% for key, item in content.field_thumbnail if key|first != '#' %}
+                  {% if content.field_thumbnail[loop.index0]['#paragraph'].field_type.value == 'flyer' and
+                        content.field_thumbnail[loop.index0]['#paragraph'].field_show_on.value != 'desktop'   %}
+
+                      {% if isSet == 0 %}
+                        {% set isSet = 1 %}
+
+
+    <div class="panel">
+        <div class="panel-heading" role="tab" id="headingFour">
+            <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+          Flyer
+        </a>
+      </h4>
+        </div>
+        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+          <div class="panel-body  thumbnail-list">
+
+
+                    {% endif %}
+                            <div class="thumbnail-item">
+                                {{ content.field_thumbnail[loop.index0] }}
+                            </div>
+                  {% endif %}
+                {% endfor %}
+                {% if isSet == 1 %}
+                    {% set isSet = 0 %}
+                    </div>
+                  </div>
+                  </div>
+                {% endif %}
+
+                <!-- others -->
+                {% for key, item in content.field_thumbnail if key|first != '#' %}
+                  {% if content.field_thumbnail[loop.index0]['#paragraph'].field_type.value is empty
+                    and content.field_thumbnail[loop.index0]['#paragraph'].field_youtube_video is empty and
+                      content.field_thumbnail[loop.index0]['#paragraph'].field_show_on.value != 'desktop'   %}
+
+                      {% if isSet == 0 %}
+                        {% set isSet = 1 %}
+
+    <div class="panel">
+        <div class="panel-heading" role="tab" id="headingFive">
+            <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+          Others
+        </a>
+      </h4>
+        </div>
+        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+          <div class="panel-body  thumbnail-list">
+
+
+
+                    {% endif %}
+                            <div class="thumbnail-item">
+                                {{ content.field_thumbnail[loop.index0] }}
+                            </div>
+                  {% endif %}
+                {% endfor %}
+                {% if isSet == 1 %}
+                    {% set isSet = 0 %}
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+
+
+              </div>
+
+
+
+
+
+            <!-- </GROUP_BY_TYPE> -->
+        {% endif %}
+
+
+
+    {% endblock %}
+  </div>
+{% endblock paragraph %}
+
+
+{% endif %}

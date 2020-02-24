@@ -1,0 +1,70 @@
+<div class="resource-slide">
+
+{% set image = file_url(node.field_image.entity.fileuri)  %}
+{% if content.field_image_file['#items'][0].getString() is not empty %}
+    {% set image = content.field_image_file['#items'][0].getString()  %}
+{% endif %}                      
+
+
+{% if content.field_resource_type[0]['#markup']|upper == 'VIDEO' %}
+
+
+<div class="paragraph paragraph--type--video-player row">
+            <div class="modal-video video-block gsc-column col-lg-5 col-md-5 col-sm-12 col-xs-12"  style="background-image: url('{{ image }}'); background-size: cover;">
+
+                <div class="video-thumbnail " >
+                    <div class="play"></div>
+                </div>
+                <div class="videowrapper">
+                    {{ content.field_youtube_video }}
+                </div>    
+            </div>
+            <div class="gsc-column col-lg-7 col-md-7 col-sm-12 col-xs-12 content">
+                <div class="content-inner">
+                    <div class="collateral-type-icon video"></div>
+                    <h2>{{ label }}</h2>
+                    <div class="desc">{{ content.body }}</div>
+                    <a class="smaller semibold"><div class="readmore play-video-action">Play the video <i class="fa fa-angle-right"></i></div></a>
+                </div>
+                <div class="slider-placeholder-box"><div class="slider-placeholder"></div></div>      
+            </div>
+          
+</div>
+
+
+{% else %}
+
+<div class="row">
+    <div class="gsc-column col-lg-5 col-md-5 col-sm-12 col-xs-12" style="background-image: url('{{ image }}'); background-size: cover; height:100%">      
+        {% if content.field_image_file.0 is not empty %}
+            <a href="{{ content.field_link.0 }}" {% if content.field_link.0|render|slice(0,6) != 'mailto' %}target="smci"{% endif %}>
+                <img src="{{ content.field_image_file.0 }}" style="width:100%; opacity:0">
+            </a>
+        {% elseif node.field_image.entity.fileuri|render is not empty %}            
+            <a href="{{ content.field_link.0 }}" {% if content.field_link.0|render|slice(0,6) != 'mailto' %}target="smci"{% endif %}>
+                <img src="{{ file_url(node.field_image.entity.fileuri) }}" style="width:100%; opacity:0">
+            </a>
+        {% endif %}    
+    </div>
+
+
+    <div class="gsc-column col-lg-7 col-md-7 col-sm-12 col-xs-12 content">
+          <div class="content-inner">
+              {% if content.field_resource_type[0]['#markup'] is not empty %}
+                  <div class="collateral-type-icon {{ content.field_resource_type[0]['#markup']|lower|replace({' ': '-'}) }}"></div>
+              {% endif %}
+              <h2>{{ label }}</h2>
+              <div class="desc">{{ content.body }}</div>
+              {% if content.field_link.0['#paragraph'].field_link.0 is not empty %}
+                  <a href="{{ content.field_link.0 }}" {% if content.field_link.0|render|slice(0,6) != 'mailto' %}target="smci"{% endif %} class="smaller semibold">     
+                      <div class="readmore">{% if content.field_link.0|render|slice(0,6) != 'mailto' %}View{% else %}Request{% endif %} the {{content.field_resource_type[0]['#markup']|lower}} <i class="fa fa-angle-right"></i></div>
+                  </a>
+              {% endif %}
+          </div>
+          <div class="slider-placeholder-box"><div class="slider-placeholder"></div></div>        
+    </div>
+</div>
+
+{% endif %}
+
+</div>

@@ -1,0 +1,33 @@
+{{ attach_library('gavias_emon/press_release') }}
+<div class="column-inner bg-size-cover dark-bg news ">
+  <div class="column-content-outer hover-shadow" >
+    <div class="column-content-inner white-bg">
+      <div class="widget gsc-team team-vertical">
+        <div style="text-align:right" class="publish-date">{{ fields.field_date.content }}</div>
+        <div class="widget-content text-left">
+           <div class="team-header text-left">
+              {% if fields.field_source.content is not empty %}
+                <img src="/sites/default/files/logos/news/{{ fields.field_source.content }}.png">
+              {% else %}
+                <img src="{{ fields.field_image.content }}">
+              {% endif %}
+           </div>
+           <div class="team-body text-left">
+              <h3 class="team-name"><a href="{{ fields.field_external_link.content }}" target="news">{{ fields.title.content }}</a></h3>
+              {% if fields.field_author.content is not empty %}              
+                  <div class="news-author">by {{ fields.field_author.content }}</div>
+              {% endif %}
+           </div>
+
+           <div class="team-info">
+              {{ fields.body.content }}
+           </div>
+
+           <a href="{{ fields.field_external_link.content }}" target="news" class="smaller semibold" tabindex="0">     
+              <div class="readmore">Read this news <i class="fa fa-angle-right"></i></div>
+           </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

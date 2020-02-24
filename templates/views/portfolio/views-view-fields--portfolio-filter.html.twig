@@ -1,0 +1,9 @@
+<li>
+	<a href="#" {% if 'products/x11' in path('<current>') and fields.tid.content|lower|striptags|trim == 90 %}class="active"{% endif %}
+		data-filter=".{{ fields.tid.content|lower|striptags|trim }}">
+		{{ fields.name.content }}
+	</a>
+</li> 
+
+
+

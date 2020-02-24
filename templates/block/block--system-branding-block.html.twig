@@ -1,0 +1,48 @@
+{% extends "block.html.twig" %}
+{#
+/**
+ * @file
+ * Bartik's theme implementation for a branding block.
+ *
+ * Each branding element variable (logo, name, slogan) is only available if
+ * enabled in the block configuration.
+ *
+ * Available variables:
+ * - site_logo: Logo for site as defined in Appearance or theme settings.
+ * - site_name: Name for site as defined in Site information settings.
+ * - site_slogan: Slogan for site as defined in Site information settings.
+ */
+#}
+
+{% set attributes = attributes.addClass('site-branding') %}
+{% set logolink  = '/index_home.cfm' ~ langlink %}
+{% if enterprise_style == 1 %}
+    {% set logolink  = path('<front>') %}
+{% endif %}
+
+
+{% block content %}
+  {% if logo.use_default %}
+    <a href="{{ logolink }}" title="{{ 'Home'|t }}" rel="home" class="site-branding-logo padding-top-20">
+        <img src="{{ site_logo }}" alt="{{ 'Home'|t }}" />
+    </a>    
+  {% else %} 
+    <a href="{{ logolink }}" title="{{ 'Home'|t }}" rel="home" class="site-branding-logo padding-top-20">
+      {# <img src="{{ site_logo|replace({'.svg':'.png'}) }}" alt="{{ 'Home'|t }}" /> #}
+      <img src="{{ site_logo }}" alt="{{ 'Home'|t }}" width="128px" />
+    </a>  
+  {% endif %} 
+   
+  {% if site_name or site_slogan %}
+    <div class="site-branding__text">
+      {% if site_name %}
+        <div class="site-branding__name">
+          <a href="{{ logolink }}" title="{{ 'Home'|t }}" rel="home">{{ site_name }}</a>
+        </div>
+      {% endif %}
+      {% if site_slogan %}
+        <div class="site-branding__slogan">{{ site_slogan }}</div>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endblock %}

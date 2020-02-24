@@ -1,0 +1,30 @@
+{{ attach_library('gavias_emon/press_release') }}
+<div class="column-inner  bg-size-cover white-bg event hover-shadow">
+
+{% if fields.field_external_link.content is not empty %}
+   <a href="{{ fields.field_external_link.content }}" target="event">
+{% endif %}      
+
+    <div class="column-content-inner">
+         <div class="widget gsc-team team-vertical">
+            <div class="widget-content text-left">
+               <div class="team-header text-center">
+                  <img src="{{ fields.field_image.content }}">
+               </div>
+               <div class="team-body text-center">
+                  <h3 class="team-name">{{ fields.title.content }}</h3>
+               </div>
+               <div class="team-info">
+                  <div class="semibold">{{ fields.field_location.content }}<br>{{ fields.field_date.content }}{{ fields.field_end_date.content }}</div>
+                  {{ fields.body.content }}
+               </div>
+            </div>
+         </div>
+    </div>
+
+{% if fields.field_external_link.content is not empty %}
+   </a>
+{% endif %}      
+
+</div>
+

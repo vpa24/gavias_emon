@@ -1,0 +1,19 @@
+<div>
+	<div class="isotope-items view-portfolio" id="product_list">
+		{% for row in rows %}			
+			{% set excluded = false %}
+			{% if row.content['#view'].style_plugin.render_tokens[ loop.index0 ]['{{ field_exclude_from_pages }}'] is not empty %}
+				{% set excludedPages = row.content['#view'].style_plugin.render_tokens[ loop.index0 ]['{{ field_exclude_from_pages }}']|split(',') %}
+				{% for page in excludedPages %}
+				  	{% if page|trim is not empty and page|trim|lower in path('<current>')|lower %}
+				  		{% set excluded = true %}
+				  	{% endif %}
+				{% endfor %}                
+		    {% endif %}
+
+			{% if excluded == false %}
+		        {{ row.content }}
+		    {% endif %}
+		{% endfor %}
+   	</div>
+</div>

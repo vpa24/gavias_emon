@@ -1,0 +1,21 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a 'form' element.
+ *
+ * Available variables:
+ * - attributes: A list of HTML attributes for the wrapper element.
+ * - children: The child elements of the form.
+ *
+ * @see template_preprocess_form()
+ */
+#}
+
+	<div class="paragraph feedback-form survey-for-green-data-center-form">
+		<div class="box-title">Complete the form to download the Report</div>
+
+		<form{{ attributes }}>
+		  {{ children }}
+		</form>
+
+	</div>

@@ -1,0 +1,33 @@
+.navigation .gva_menu > li > a {
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+}
+
+.main-menu .btn,
+.main-menu .btn, 
+.main-menu .btn:hover, 
+.main-menu .btn:focus, 
+.main-menu .btn:active {
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent !important;
+    white-space: nowrap;
+    padding: 6px 12px !important;
+    line-height: 1.65;
+    border-radius: 5px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-transform: uppercase !important;
+    font-size: 12px !important;
+    letter-spacing: 1px;
+    background-color: #4698D5 !important;
+}
+
+#search-block-form #edit-keys {
+    display: none;
+}

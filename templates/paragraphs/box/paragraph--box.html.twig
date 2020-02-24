@@ -1,0 +1,53 @@
+<div class="column-inner bg-size-cover">
+  <div class="column-content-inner">
+    <div class="widget gsc-team team-vertical scale-on-hover ">
+      <div class="widget-content text-center">
+
+        <div class="team-header text-center bg-white">
+          {% if content.field_open_in_modal_overlay['#items'][0].getString() == '1' %}
+              {% if content.field_smart_link.0 is not empty %}
+                  <a href="{{ content.field_smart_link.0 }}" data-colorbox-gallery="" class="colorbox cboxElement">
+                    <img src="{{ file_url(paragraph.field_image.entity.fileuri) }}" typeof="foaf:Image">
+                    <div style="display: none">{{ content.field_image }}</div>
+                  </a>
+              {% endif %}
+          {% else %}
+              {% if content.field_smart_link.0 is not empty %}
+                  <a href="{{ content.field_smart_link.0 }}">
+              {% endif %}
+              <img src="{{ file_url(paragraph.field_image.entity.fileuri) }}" class="img-responsive">  
+              {% if content.field_smart_link.0 is not empty %}
+                  </a>
+              {% endif %}
+          {% endif %}
+        </div>
+        <div class="team-body text-center">
+          <div class="team-body-content">
+            <h3 class="team-name">
+              {% if content.field_open_in_modal_overlay['#items'][0].getString() == '1' %}
+                  {% if content.field_smart_link.0 is not empty %}
+                      <a href="{{ content.field_smart_link.0 }}" data-colorbox-gallery="" class="colorbox cboxElement">
+                        {{ content.field_title }}
+                        <div style="display: none">{{ content.field_image }}</div>
+                      </a>
+                  {% endif %}
+              {% else %}
+                  {% if content.field_smart_link.0 is not empty %}
+                    <a href="{{ content.field_smart_link.0 }}">
+                  {% endif %}
+                  {{ content.field_title }}
+                  {% if content.field_smart_link.0 is not empty %}
+                    </a>
+                  {% endif %}
+              {% endif %}
+            </h3>
+            <p class="team-position"></p>
+          </div>
+          <p class="team-info"></p>
+          <div class="social-icons">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

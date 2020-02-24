@@ -1,0 +1,130 @@
+
+
+/* ------------------------------------------ */
+/* footer
+/* ------------------------------------------ */
+.footer,
+.footer .footer-top,
+.copyright {
+     background-color: #003A70;
+}
+
+.copyright {
+    font-size: 0.8em;
+}
+
+.footer .footer-center {
+    padding-top: 60px;
+}
+
+.footer .footer-center .column {
+    padding-left: 60px;
+}
+
+#footer-products ul {
+    -moz-column-count: 2;
+    -moz-column-gap: 10px;
+    -webkit-column-count: 2;
+    -webkit-column-gap: 10px;
+    column-count: 2;
+    column-gap: 10px;
+}
+
+.footer .block-title {
+    border-bottom: none;
+}
+
+.footer,
+.footer a {
+    color: #f5f6f7 !important;
+}
+
+.footer a:hover {
+    color: #d30015  !important;
+}
+
+.footer .block-title {
+    margin: 0 0 10px;
+}
+
+.footer .block-title span {
+    color: #d30015;
+    font-family: inherit;
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 0px;
+}
+
+/* ===================== footer social ============= */
+.footer-social {
+    padding-top: 10px;
+    text-align: left;
+    width: 80%;
+}
+
+.footer-social ul li a i {
+    background: #205D7A;
+    color: #fff;
+    width: 35px;
+    height: 35px;
+    border-radius: 20px;
+    font-size: 18px;
+    text-align: center;
+    margin-right: 10px;
+    padding-top: 20%;
+}
+
+.footer-social .fa-facebook {
+    background: #3b5998;
+}
+
+.footer-social .fa-linkedin {
+    background: #45b0e3;
+}
+
+.footer-social .fa-twitter {
+    background: #0177b5;
+}
+
+.footer-social .fa-google-plus {
+    background: #dd4b39;
+}
+
+.footer-social .fa-youtube-play {
+    background: #d32323;
+}
+
+.footer-social ul li a i {
+    transition: all 0.2s ease-in-out;
+}
+
+.footer-social ul li a i:hover {
+    opacity: .7;
+}
+
+.footer-social ul li {
+    display: inline-block;
+    padding: 5px 5px 5px 0px;
+}
+
+
+@media (max-width: 1200px) {
+    .footer-social {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-social ul li a i {}
+    .footer-social ul li {
+        padding: 5px 0px;
+    }
+}
+
+
+
+
+#backtotop {
+  z-index: 1000;
+}

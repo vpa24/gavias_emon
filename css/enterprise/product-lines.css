@@ -1,0 +1,197 @@
+.product-lines .column-inner {
+    background-color: #fff;
+    color: #222;
+}
+
+.product-lines .widget .team-info {
+    text-align: left;
+    padding: 0 30px;
+}
+
+.product-lines .widget .team-info img {
+    width: 30px;
+}
+
+.product-lines .widget .team-info img.wide {
+    width: 40px;
+}
+
+.product-lines .widget .team-header img {
+    height: 120px;
+    padding-bottom: 10px;
+}
+
+
+.product-lines .widget .team-info table {
+    border: none;
+}
+
+.product-lines .widget .team-info td,
+.product-lines .widget .team-info th {
+    padding: 5px;
+    border: none;
+    vertical-align: middle;
+    font-size: 14px;
+    line-height: 1.1;
+}
+
+.product-lines .widget .team-info table td:first-child {
+    text-align: center;
+    width: 50px;
+}
+
+.product-lines .widget .readmore {
+    padding-top: 0;
+}
+
+/* product-lines with grid */
+
+.product-lines.product-lines-grid .column-content-inner {
+    height: 100%;
+}
+
+.product-lines.product-lines-grid .widget {
+    height: 100%;
+}
+
+.product-lines.product-lines-grid .widget-content {
+    position: relative;
+    padding-bottom: 50px;
+    height: 100%;
+}
+
+.product-lines.product-lines-grid .widget .team-body-content {
+    margin-top: 10px;
+}
+
+.product-lines.product-lines-grid .widget .team-info td,
+.product-lines.product-lines-grid .widget .team-info th {
+    vertical-align: top;
+    border-top: 1px solid #f1f1f1;
+    border-bottom: 1px solid #f1f1f1;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.product-lines.product-lines-grid .widget .team-info th {
+    text-align: right;
+    width: 25%;
+    min-width: 8em;
+}
+
+.product-lines.product-lines-grid .widget .team-info table {
+    margin-bottom: 0;
+}
+
+.product-lines.product-lines-grid .widget .team-info table ul {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.product-lines.product-lines-grid .widget .team-info table li {
+    list-style: none;
+    padding-left: 1em;
+    position: relative;
+}
+
+.product-lines.product-lines-grid .widget .team-info table li::before {
+    content: "•";
+    color: #961919;
+    display: block;
+    position: absolute;
+    top: 0em;
+    left: 0;
+    width: 1em;
+    height: 1.1em;
+    margin-top: -0.05em;
+}
+
+.product-lines.product-lines-grid .widget .team-info .buttons {
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.product-lines.product-lines-grid .widget .team-info .buttons a {
+    widows: 150px;
+}
+
+.product-lines.product-lines-grid .widget .team-info .emphasize {
+    color: #961919;
+}
+
+.product-lines.product-lines-grid .widget .team-info .show-more {
+    width: 100%;
+    display: block;
+    text-align: center;
+    padding: 5px 0 10px 0;
+    font-size: 16px;
+    line-height: 1;
+    color: #002248;
+    border-top: 1px solid #f1f1f1;
+    margin-top: 2px;
+    background-color: #f1f1f1;
+    background: linear-gradient(to top, #f1f1f1 0%, #fff 100%);
+}
+
+.product-lines.product-lines-grid .widget .team-info .show-more:hover {
+    background: #f1f1f1;
+}
+
+.product-lines.product-lines-grid .widget .team-info .show-more i {
+    color: #527AA4;
+    font-size: 16px;
+    margin-left: 5px;
+}
+
+.product-lines.product-lines-grid .widget .team-info .js-pre-hide {
+    display: none;
+}
+
+.product-lines.product-lines-grid .field--name-field-footer {
+    color: #961919;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.product-lines.product-lines-grid .widget .readmore {
+    padding-top: 0;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    bottom: 0;
+}
+/* 
+.product-lines.product-lines-grid .widget .team-info .sub-title:before {
+    display: block;
+    width: 90%;
+    margin: 0 auto;
+    height: 1;
+    height: 1px;
+    background-color: #f1f1f1;
+    content: '';
+    position: absolute;
+    z-index: 0;
+    bottom: 0;
+} */
+
+.product-lines.product-lines-grid .widget .team-info .sub-item {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    border-bottom: 1px solid #f1f1f1;
+}
+.product-lines.product-lines-grid .widget .team-info .sub-item:first-of-type {
+    margin-top: 0;
+}
+.product-lines.product-lines-grid .widget .team-info .sub-item span {
+    font-weight: 600;
+    line-height: 1.3;
+    background-color: #f1f1f1;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: inline-block;
+}

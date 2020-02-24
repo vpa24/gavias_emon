@@ -1,0 +1,58 @@
+{{ attach_library('gavias_emon/product-selector') }}
+
+{%
+  set classes = [
+    'paragraph',
+    'paragraph--type--' ~ paragraph.bundle|clean_class,
+    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+    'full-width'
+  ]
+%}
+{% if content.field_classes['#items'][0].getString() is not empty %}
+    {% set classes = classes|merge(content.field_classes['#items'][0].getString()|split(' ')) %}
+{% endif %}
+
+{% block paragraph %}
+    <div{{attributes.addClass(classes)}} {% if content.field_id['#items'][0].getString() is not empty %} id="{{ content.field_id['#items'][0].getString() }}" {% endif %}>
+
+        {% if content.field_title.0 is not empty %}
+            <div class="box-title">{{ content.field_title.0 }}</div>
+        {% endif %}
+
+        {% block content %}
+
+            {# <div id="keyword-search" style="text-align: right"></div> #}
+            {{ content.field_plugin_block }}
+
+        {% endblock %}
+    </div>
+    <div id="compare-tray">
+        <div class="compare-tips">
+            <button class="btn js-ptCompare-go" data-lang="{{language}}">
+                <span>Compare</span>
+                <span class="js-ptCompare-total">0</span>
+                <span>/</span>
+                <span class="js-ptCompare-total-max"></span>
+            </button>
+            <button class="btn btn-clear show-detail js-ptCompare-view-items">
+                <span>
+                    <i class="fa fa-chevron-down"></i>
+                </span>
+                <span>
+                    <i class="fa fa-chevron-up"></i>
+                </span>
+            </button>
+            <button class="btn btn-sm btn-clear remove-all js-ptCompare-remove-all">
+                <span class="close-icon">&times;</span>Clear all</button>
+        </div>
+        <div class="compare-detail">
+            <div class="container">
+                <div class="selected-product-list js-ptCompare-compare-items"></div>
+            </div>
+        </div>
+    </div>
+{% endblock paragraph %}
+
+<div class="paragraph">
+    {{ productnamingconventions }}
+</div>

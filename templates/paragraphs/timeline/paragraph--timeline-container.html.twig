@@ -1,0 +1,51 @@
+{{ attach_library('gavias_emon/timeline') }}
+
+<div class="timeline-wrapper">
+
+    {% set colors = ["blue", "yellow", "green", "red", "darkcyan"] %}
+
+    {% for key, item in content.field_timeline if key|first != '#' %}
+
+        <div class="timeline {{ colors[loop.index0 % 5] }}">
+            <div class="timeline-body">
+                {{ content.field_timeline[loop.index0]['#paragraph'].field_body.value|raw }}
+            </div>
+            <div class="product-innovations">
+                {{ content.field_timeline[loop.index0]['#paragraph'].field_product_innovations.value|raw }}
+            </div>
+
+            <div class="top">
+                {% if loop.index0 is divisibleby(2) %}
+                    <div class="line"></div>
+                    <div class="year">
+                        {{ content.field_timeline[loop.index0]['#paragraph'].field_year.value }}
+                    </div>
+                    <div class="line shorter"></div>                
+                    <div class="content">
+                        <div class="desc">
+                            {{ content.field_timeline[loop.index0]['#paragraph'].field_description.value|raw }}
+                        </div>
+                    </div>                    
+                {% endif %}
+            </div>
+            <div class="timeline-icon"><div class="dot"></div></div>
+            <div class="bottom">
+                {% if loop.index0 is not divisibleby(2) %}
+                    <div class="line"></div>                
+                    <div class="year">
+                        {{ content.field_timeline[loop.index0]['#paragraph'].field_year.value }}
+                    </div>                        
+                    <div class="line shorter"></div>                
+                    <div class="content">
+                        <div class="desc">
+                            {{ content.field_timeline[loop.index0]['#paragraph'].field_description.value|raw }}
+                        </div>
+                    </div>              
+                {% endif %}    
+
+            </div>
+        </div>
+
+    {% endfor %}
+
+</div>

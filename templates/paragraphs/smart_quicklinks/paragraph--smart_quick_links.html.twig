@@ -1,0 +1,25 @@
+<div class="quick-links mobile-quick-links{% if content.field_layout['#items'][0].getString() != 'Box' %} full-width{% endif %} "
+      {% if content.field_css['#items'][0].getString() is not empty %} 
+          style="{{ content.field_css['#items'][0].getString() }}"
+      {% endif %}          
+>
+  <div class="with-nav-tabs panel-default">
+    <div class="panel-body">
+      <div class="tab-content">
+        <div class="tab-pane fade in active" id="tab1default">
+          <div class="product-family-tab">
+            <div class="tabs tabs-style-underline">
+              <nav>
+                <ul>
+                  {% for key, item in content.field_smart_quick_link if key|first != '#' %}
+                      {{ content.field_smart_quick_link[loop.index0] }}
+                  {% endfor %}
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

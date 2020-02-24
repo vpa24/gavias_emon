@@ -1,0 +1,94 @@
+.webinar {
+  position: relative;
+}
+
+.webinar .widget.gsc-team.team-vertical .team-header img {
+  height: 70px;
+}
+
+.webinar .news-author {
+    min-height: 40px;
+    line-height: 1.1;
+}  
+
+.webinar .team-info {
+  height: 200px;
+  overflow:auto;
+}
+
+.webinar-list {
+  min-height: 200px;
+}
+
+
+.webinar-list.upcoming {
+  padding-top: 50px;
+}
+
+.webinar .publish-date {
+    margin: 5px 0;
+    font-size: 14px;
+    font-weight: 300;
+    color: #A4A4A4;
+    text-align: left !important;
+}
+
+.webinar .team-info::-webkit-scrollbar {
+    width: 8px;
+}
+
+.webinar .team-info::-webkit-scrollbar-thumb {
+    background-color: #cbc8c7;
+    border-radius: 10px;
+}
+
+.webinar .team-info::-webkit-scrollbar-track {
+    background-color: #edeceb;
+    border-radius: 10px;
+}
+
+.webinar-list #webinar-filter {
+    text-align: right; 
+    padding-bottom: 10px; 
+    padding-right: 5px
+}
+
+
+.white-triangle-topright {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-top: 50px solid white;
+    border-left: 50px solid transparent;
+}
+
+.blue-triangle-topright {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-top: 80px solid #003A70;
+    border-left: 80px solid transparent;
+}
+
+.coming-soon-flag-corner {
+    position: absolute;
+    top: 20px;
+    right: -6px;
+    filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=0.5);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.coming-soon-flag-corner:after {
+    content: 'COMING SOON';
+    color: white;
+    font-weight: 600;
+    font-size: 12px;
+}

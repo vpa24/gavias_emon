@@ -1,0 +1,85 @@
+{% if paragraph.field_image.entity.fileuri|render is not empty %}
+  <div class="parallax-window {% if content.field_layout['#items'][0].getString() != 'Box' %}full-width{% endif %}
+                              {% if content.field_classes['#items'][0].getString() is not empty %}{{ content.field_classes['#items'][0].getString() }}{% endif %}"
+       data-parallax="scroll"
+       data-image-src="{{ file_url(paragraph.field_image.entity.fileuri) }}"
+       style="padding-top: 100px; padding-bottom: 100px; {% if content.field_css['#items'][0].getString() is not empty %}{{ content.field_css['#items'][0].getString() }}{% endif %}"
+       data-position-y="0px">
+      <div>
+{% else %}
+      <div class="{% if content.field_layout['#items'][0].getString() != 'Box' %}full-width{% endif %}
+                  {% if content.field_classes['#items'][0].getString() is not empty %}{{ content.field_classes['#items'][0].getString() }}{% endif %}"
+      {% if content.field_css['#items'][0].getString() is not empty %}style="{{ content.field_css['#items'][0].getString() }}"{% endif %}
+      >
+{% endif %}
+
+
+   <div class="bb-container container paragraph-boxes"
+        {% if content.field_id['#items'][0].getString() is not empty %}id="{{ content.field_id['#items'][0].getString() }}"{% endif %}
+   >
+
+      {% if content.field_title.0 is not empty %}
+          <div class="box-title" style="margin-bottom: 0px">{{ content.field_title.0 }}</div>
+      {% endif %}
+      {% if content.field_subtitle_html.0 is not empty %}
+          <div class="box-subtitle" >{{ content.field_subtitle_html.0 }}</div>
+      {% endif %}
+
+      
+      <div class="row">
+        <div class="row-wrapper clearfix">
+
+          {% set total = 0 %}
+          {% for key, item in content.field_box if key|first != '#' %}
+              {% set total = total + 1 %}
+          {% endfor %}
+
+          {% set columnCount = content.field_number_of_columns['#items'][0].getString() %}
+
+          {% for key, item in content.field_box if key|first != '#' %}
+            {% set smCol = 6 %}
+            {% if total == 3 %}
+              {% set smCol = 4 %}
+            {% endif %}
+
+            {% if columnCount != 'AUTO' and columnCount is not empty %}
+              {% set mdLgCol = 12 // columnCount %}
+            {% elseif total % 4 == 0 %}
+              {% set mdLgCol = 3 %}
+            {% elseif total % 3 == 0 %}
+              {% set mdLgCol = 4 %}
+            {% elseif total % 4 == 1 and total % 3 != 1 %}
+              {% set mdLgCol = 4 %}
+            {% elseif total % 4 != 1 and total % 3 == 1 %}
+              {% set mdLgCol = 3 %}
+            {% elseif total % 4 == 1 and total % 4 == 1 %}
+              {% set mdLgCol = 3 %}
+            {% elseif total < 3 %}
+              {% set mdLgCol = 4 %}
+            {% else %}
+              {% set mdLgCol = 3 %}
+            {% endif %}
+
+            <div class="gsc-column col-lg-{{ mdLgCol }} col-md-{{ mdLgCol }} col-sm-{{smCol}} col-xs-12">
+                {{ content.field_box[loop.index0] }}
+            </div>
+
+            {% if (mdLgCol == 4 and loop.index % 3 == 0) or (mdLgCol == 3 and loop.index % 4 == 0) %}
+              <div class="clearfix hidden-sm hidden-xs"></div>
+            {% endif %}
+
+            {% if smCol == 6 and loop.index % 2 == 0 %}
+              <div class="clearfix hidden-xs hidden-md hidden-lg"></div>
+            {% endif %}
+
+
+          {% endfor %}
+
+        </div>
+      </div>
+   </div>
+</div>
+
+{% if paragraph.field_image.entity.fileuri|render is not empty %}
+</div>
+{% endif %}

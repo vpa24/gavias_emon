@@ -1,0 +1,138 @@
+
+<style>
+.product-family-tab .tabs {
+  overflow: visible;
+}
+
+.dropbtn {
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content  {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 500;
+    width: 100%;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+@media (max-width: 990px) {
+  .dropdown-content a {
+      padding: 0px !important;
+  }
+}
+
+</style>
+
+<div class="quick-links mobile-quick-links">
+    <div class="with-nav-tabs panel-default">
+    <!--<div class="panel with-nav-tabs panel-default"  style="border:none;"> -->
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="tab1default">
+
+
+                        <div class="selected-product-family product-family-tab">
+                          <div class="tabs tabs-style-underline">
+                            <nav>
+                              <ul>
+                                <li class="active" id="expand-product-family">
+                                  <a href="#" >
+                                    {% set tabSelected = false %}
+                                    {% for row in rows %}                       
+                                      {% if row.content['#view'].style_plugin.render_tokens[ loop.index0 ]['{{ path }}']|trim in path('<current>') %}
+                                        {{ row.content['#view'].style_plugin.render_tokens[ loop.index0 ]['{{ title }}'] }}
+                                        {% set tabSelected = true %}
+                                      {% endif %}  
+                                    {% endfor %}
+
+                                    {% if tabSelected == false %}
+                                      Select a Product Family
+                                    {% endif %}  
+                                  </a>
+                                  <span class="icaret nav-plus fa fa-angle-down"></span>
+                                </li>
+                              </ul>
+                            </nav>
+                          </div>
+                        </div>
+
+
+
+                        <div class="product-family-tab mobile-style-tab">
+                            <div class="tabs tabs-style-underline">
+                              <nav>
+                                <ul>
+                                  <li class="dropdown" style="z-index: 5">
+                                    <a class="dropbtn" href="{{ language }}/products/storage">SuperStorage</a>
+                                    <div class="dropdown-content">
+                                      {% if language == '/en' %}
+                                          {# <a href="{{language}}/products/storage/superstorage/sbb">Storage Bridge Bay</a> #}
+                                          <a href="{{language}}/products/storage/superstorage/drives">Storage Drives</a>
+                                          <a href="/products/nfo/files/storage/SBB-HDDCompList.pdf">HDD Compatibility</a>
+                                      {% elseif language == '/zh_tw' %}
+                                          {# <a href="{{language}}/products/storage/superstorage/sbb">硬碟擴充櫃</a> #}
+                                          <a href="{{language}}/products/storage/superstorage/drives">Storage Drives</a>
+                                          <a href="/products/nfo/files/storage/SBB-HDDCompList.pdf">HDD 相容清單</a>
+                                      {% elseif language == '/zh_cn' %}
+                                          {# <a href="{{language}}/products/storage/superstorage/sbb">硬盘扩充柜</a> #}
+                                          <a href="{{language}}/products/storage/superstorage/drives">Storage Drives</a>
+                                          <a href="/products/nfo/files/storage/SBB-HDDCompList.pdf">HDD 相容清单</a>
+                                      {% elseif language == '/ja' %}
+                                          {# <a href="{{language}}/products/storage/superstorage/sbb">ストレージブリッジベイ</a> #}
+                                          <a href="{{language}}/products/storage/superstorage/drives">Storage Drives</a>
+                                          <a href="/products/nfo/files/storage/SBB-HDDCompList.pdf">HDD 互換</a>      
+                                      {% endif %}    
+                                    </div>
+                                  </li>
+
+                                  {% for row in rows %}
+                                      {{ row.content }}
+                                  {% endfor %}
+
+                                  {% if language == '/en' %}
+                                      <li><a href="/support/resources/Riser.cfm">Riser Cards</a></li>
+                                      {# <li><a href="/products/nfo/files/storage/SAS-CompList.pdf">Expander/HDD Compatibility</a></li> #}
+                                  {% elseif language == '/zh_tw' %}
+                                      <li><a href="/support/resources/Riser.cfm">轉接卡</a></li>
+                                      {# <li><a href="/products/nfo/files/storage/SAS-CompList.pdf">Expander/HDD 相容清單</a></li> #}
+                                  {% elseif language == '/zh_cn' %}
+                                      <li><a href="/support/resources/Riser.cfm">轉接卡</a></li>
+                                      {# <li><a href="/products/nfo/files/storage/SAS-CompList.pdf">Expander/HDD 相容清单</a></li> #}
+                                  {% elseif language == '/ja' %}
+                                      <li><a href="/support/resources/Riser.cfm">ライザーカード</a></li>
+                                      {# <li><a href="/products/nfo/files/storage/SAS-CompList.pdf">Expander/HDD 互換</a></li> #}
+                                  {% endif %}                                      
+                                </ul>
+                              </nav>
+                            </div>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

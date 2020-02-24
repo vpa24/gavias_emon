@@ -1,0 +1,95 @@
+<div class="column-inner  bg-size-cover {{ content.field_classes['#items'][0].getString() }}" style="{{ content.field_css['#items'][0].getString() }}">
+    <div class="column-content-inner">
+        {% if content.field_content_position['#items'][0].getString() == 'below' %}
+            <div class="widget gsc-team team-vertical">
+                <div class="widget-content text-center">
+                    <div class="team-header text-center">
+                        {% if content.field_smart_link.0['#paragraph'].field_link.0 is not empty %}
+                            <a href="{{ content.field_smart_link.0 }}">
+                        {% endif %}
+                        {% if content.field_image_file.0 is not empty %}
+                            <img {% if parenttype == 'carousel' %}data-lazy{% else %}src{% endif %}="{{ content.field_image_file.0 }}" class="img-responsive" {% if content.field_image_alternative_text.0 is not empty %}alt="{{content.field_image_alternative_text.0}}"{% endif %} >
+                        {% elseif paragraph.field_image.entity.fileuri|render is not empty %}
+                            <img {% if parenttype == 'carousel' %}data-lazy{% else %}src{% endif %}="{{ file_url(paragraph.field_image.entity.fileuri) }}" class="img-responsive" {% if paragraph.field_image.alt is not empty %} alt="{{paragraph.field_image.alt}}"{% endif %} >
+                        {% endif %}    
+                        {% if content.field_smart_link.0['#paragraph'].field_link.0 is not empty %}
+                            </a>
+                        {% endif %}
+                    </div>
+                    {% set align = 'left' %}
+                    {% if content.field_content_align['#items'][0].getString() is not empty %}
+                        {% set align = content.field_content_align['#items'][0].getString() %}
+                    {% endif %}
+                    <div class="team-body text-{{ align|lower }}">
+                        <div class="team-body-content">
+                            <h3 class="team-name">{{ content.field_title.0 }}</h3>
+                        </div>
+                        <div class="team-info">{{ content.field_body }}</div>
+                        {% if content.field_smart_link.0['#paragraph'].field_link.0 is not empty %}
+                            <div class="readmore"><a class="btn-theme btn btn-sm" href="{{ content.field_smart_link.0 }}">{% if content.field_link_title.0 is empty %}Learn more{% else %}{{ content.field_link_title.0 }}{% endif %}</a></div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+        {% else %}
+
+            <div class="gsc-hover-background clearfix ">
+                <div class="front">
+                    {% if content.field_image_file.0 is not empty %}
+                        <img {% if parenttype == 'carousel' %}data-lazy{% else %}src{% endif %}="{{ content.field_image_file.0 }}" {% if content.field_image_alternative_text.0 is not empty %}alt="{{content.field_image_alternative_text.0}}"{% endif %}>
+                    {% elseif paragraph.field_image.entity.fileuri|render is not empty %}
+                        <img {% if parenttype == 'carousel' %}data-lazy{% else %}src{% endif %}="{{ file_url(paragraph.field_image.entity.fileuri) }}" {% if paragraph.field_image.alt is not empty %} alt="{{paragraph.field_image.alt}}"{% endif %} >
+                    {% endif %}    
+                    <h2>{{ content.field_title.0 }}</h2>
+                    {% if content.field_description.0 is not empty %}
+                        <div>{{ content.field_description.0 }}</div>
+                    {% endif %} 
+                </div>
+                <div class="back"
+                    {% if content.field_image_file.0 is not empty %}
+                        style="background: url('{{ content.field_image_file.0 }}') no-repeat center center">
+                    {% elseif paragraph.field_image.entity.fileuri|render is not empty %}
+                        style="background: url('{{ file_url(paragraph.field_image.entity.fileuri) }}') no-repeat center center">
+                    {% endif %}
+
+                    {% if content.field_hover_overlay['#items'][0].getString() == '1' and content.field_smart_link.0['#paragraph'].field_link.0 is not empty %}
+                    <a class="content hover-overlay" href="{{ content.field_smart_link.0 }}">
+                    {% else %}
+                    <div class="content">
+                    {% endif %} 
+                    
+                        <div class="content-text">{{ content.field_body }}</div>
+                        {% if content.field_smart_link.0['#paragraph'].field_link.0 is not empty %}
+                        <div class="readmore">
+                            {% if content.field_hover_overlay['#items'][0].getString() == '1' %}
+                                <span class="btn-theme btn btn-sm">
+                            {% else %}
+                                <a class="btn-theme btn btn-sm" href="{{ content.field_smart_link.0 }}">
+                            {% endif %}
+
+                            {% if content.field_link_title.0 is empty %}
+                                Learn more
+                            {% else %}
+                                {{ content.field_link_title.0 }}
+                            {% endif %}
+                                
+                            {% if content.field_hover_overlay['#items'][0].getString() == '1' %}
+                                </span>
+                            {% else %}
+                                </a>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+
+                    {% if content.field_hover_overlay['#items'][0].getString() == '1' and content.field_smart_link.0['#paragraph'].field_link.0 is not empty %}
+                    </a>
+                    {% else %}
+                    </div>
+                    {% endif %} 
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+</div>

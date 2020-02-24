@@ -1,0 +1,89 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a paragraph.
+ *
+ * Available variables:
+ * - paragraph: Full paragraph entity.
+ *   Only method names starting with "get", "has", or "is" and a few common
+ *   methods such as "id", "label", and "bundle" are available. For example:
+ *   - paragraph.getCreatedTime() will return the paragraph creation timestamp.
+ *   - paragraph.id(): The paragraph ID.
+ *   - paragraph.bundle(): The type of the paragraph, for example, "image" or "text".
+ *   - paragraph.getOwnerId(): The user ID of the paragraph author.
+ *   See Drupal\paragraphs\Entity\Paragraph for a full list of public properties
+ *   and methods for the paragraph object.
+ * - content: All paragraph items. Use {{ content }} to print them all,
+ *   or print a subset such as {{ content.field_example }}. Use
+ *   {{ content|without('field_example') }} to temporarily suppress the printing
+ *   of a given child element.
+ * - attributes: HTML attributes for the containing element.
+ *   The attributes.class element may contain one or more of the following
+ *   classes:
+ *   - paragraphs: The current template type (also known as a "theming hook").
+ *   - paragraphs--type-[type]: The current paragraphs type. For example, if the paragraph is an
+ *     "Image" it would result in "paragraphs--type--image". Note that the machine
+ *     name will often be in a short form of the human readable label.
+ *   - paragraphs--view-mode--[view_mode]: The View Mode of the paragraph; for example, a
+ *     preview would result in: "paragraphs--view-mode--preview", and
+ *     default: "paragraphs--view-mode--default".
+ * - view_mode: View mode; for example, "preview" or "full".
+ * - logged_in: Flag for authenticated user status. Will be true when the
+ *   current user is a logged-in member.
+ * - is_admin: Flag for admin user status. Will be true when the current user
+ *   is an administrator.
+ *
+ * @see template_preprocess_paragraph()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    'paragraph',
+    'paragraph--type--' ~ paragraph.bundle|clean_class,
+    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+  ]
+%}
+{% block paragraph %}
+  <div{{ attributes.addClass(classes) }} style="clear: left"> 
+    {% block content %}
+
+      <div
+          {% if content.field_layout['#items'][0].getString() != 'Box' %}class="full-width"{% endif %}
+          {% if content.field_css['#items'][0].getString() is not empty %} 
+              style="{{ content.field_css['#items'][0].getString() }}"
+          {% endif %}          
+      >
+        <div class="container">
+          {% if content.field_title.0 is not empty %} 
+            <div style="text-align: center; padding-top: 20px">
+              <div style="position: relative;">              
+                <h2>{{ content.field_title }}</h2>
+                <div id="search-sku"></div>
+              </div>
+            </div>
+          {% endif %}          
+          <div class="product-generation-filter tab-filter">
+              <div class="panel with-nav-tabs panel-default"  style="border:none;">
+                  <div class="panel-heading" style="border:none;">
+                      <ul class="nav nav-tabs">                
+
+                        {% set generations = content.field_generation|reverse %}
+                        {% for key, item in generations if key|first != '#' %}
+                            {% set gen = generations[loop.index0] %}
+
+                            <li  {% if loop.index0 == 0 %}class="active"{% endif %} ><a href="#" data-filter="{{ gen }}"><img src="/sites/default/files/logos/{{ gen }}_70.png" class="toggleBtn {% if loop.index0 == 0 %}  toggleBtn_On{% else %}  toggleBtn_Off{% endif %}  ">
+                              <span class="filter-label">&nbsp;&nbsp;{{ gen }} Generation</span>
+                            </a></li>
+                        {% endfor %}
+                      </ul>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>    
+
+    {% endblock %}
+  </div>
+{% endblock paragraph %}

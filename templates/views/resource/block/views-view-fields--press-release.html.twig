@@ -1,0 +1,27 @@
+{{ attach_library('gavias_emon/press_release') }}
+<article class="press-release-field ">
+  <div class="post-block">
+    <div class="post-meta">
+      <span class="post-created"> {{ fields.field_date.content }} </span>
+    </div>      
+    <div class="post-content hover-shadow">
+        <div class="row">
+{#           
+            <div class="col-xs-3 post-thumbnail">
+                {{ fields.field_thumbnail.content }}
+            </div>
+            <div class="col-xs-9">
+ #}
+            <div class="col-xs-12">
+                <h3 class="post-title">{{  fields.title.content }}</h3>
+                <div class="post-description">
+                    {{ fields.body.content }}
+                    <a href="{{ fields.view_node.content }}" target="smci" class="smaller semibold" >
+                      <div class="readmore">More <i class="fa fa-angle-right"></i></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</article>  

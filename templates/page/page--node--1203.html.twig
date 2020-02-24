@@ -1,0 +1,88 @@
+
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="content-inner">
+            <div>
+                <div id="block-gavias-emon-breadcrumbs" class="block block-system block-system-breadcrumb-block no-title">
+                    <div class="content block-content">
+                        <nav class="breadcrumb" role="navigation" aria-labelledby="system-breadcrumb">
+                            <h2 id="system-breadcrumb" class="visually-hidden">Breadcrumb</h2>
+                            <ol>
+                                <li>
+                                    <a href="/{{language}}">Home</a>
+                                    <span class="">&raquo;</span>
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+                <div id="block-breadcrumbslinks" class="block block-block-content block-block-contentffdb7db5-dc06-42af-a5c1-2ea5dea71b86 no-title">
+                    <div class="content block-content" style="display: inline-block">
+                        <div class="field field--name-body field--type-text-with-summary field--label-hidden field__item">
+                            <div id="top-right-menu">
+                                <a href="/{{language}}/products/SMC_global_skus">Global SKU</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lang-switcher">
+                      <div class="content block-content">
+                        <form class="lang-dropdown-form lang_dropdown_form language_interface" >
+                          <div class="js-form-item form-item js-form-type-select form-item-lang-dropdown-select js-form-item-lang-dropdown-select form-no-label">
+                            <label for="edit-lang-dropdown-select" class="visually-hidden">Select your language</label>
+                            <select onChange="changeLanguage(this)" style="width:100px; border: 1px solid rgba(0,0,0,.1); background-color: white" class="lang-dropdown-select-element form-select"  name="lang_dropdown_select" id="lang_dropdown_select">
+                              <option value="en">English</option>
+                              <option value="zh_tw">繁體中文</option>
+                              <option value="zh_cn">簡体中文</option>
+                              <option value="ja">日本語</option>
+                            </select>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+var path = window.location.pathname;
+var currentLang = "en";
+if (path.indexOf('/zh_tw/') == 0) {
+    currentLang = "zh_tw";
+}
+else if (path.indexOf('/zh_cn/') == 0)  {
+    currentLang = "zh_cn";
+}
+else if (path.indexOf('/ja/') == 0) {
+    currentLang = "ja";
+}
+
+
+function changeLanguage(select) {
+    var selectedLang = select.options[select.selectedIndex].value;
+    window.location.href = window.location.href.replace("/" + currentLang + "/", "/" + selectedLang + "/");
+}
+
+
+var readyHandler = function() {
+    if (window.jQuery) {  
+        clearInterval(timer0);
+        jQuery(document).ready(function () {
+            jQuery("#lang_dropdown_select option[value='" + currentLang + "']").prop('selected', true);
+            jQuery("#lang_dropdown_select option[value='" + currentLang + "']").attr('selected', 'selected');
+        });
+    }
+}
+var timer0 = setInterval(readyHandler, 500);
+
+</script>
+
+
+
+
+
+{% include directory ~ '/templates/page/footer.html.twig' %}	

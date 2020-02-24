@@ -1,0 +1,48 @@
+{{ attach_library('gavias_emon/press_release') }}
+{%
+  set classes = [
+    'node',
+    'node-detail',
+    'node--type-' ~ node.bundle|clean_class,
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+    'clearfix',
+    'news-search-result',
+  ]
+%}
+<article{{ attributes.addClass(classes) }} 
+  <div class="post-block">
+    <div class="post-meta">
+      <span class="post-created">EVENT</span>
+    </div>      
+    <div class="post-content">
+        <div class="row">
+            <div class="col-xs-9">
+              <h3{{ title_attributes.addClass('post-title') }}>
+                  {% if content.field_external_link.0 is not empty %}
+                    <a href="{{ content.field_external_link.0 }}" target="smci">{{ label }}</a>
+                  {% else %}
+                    {{ label }}
+                  {% endif %}  
+              </h3>
+              <div class="post-description">
+                <div class="semibold">{{ content.field_location.0 }}<br>{{ content.field_date.0 }}{{ content.field_end_date.0 }}
+                </div>
+                {{ content.body }}
+              </div>
+
+              {% if content.field_external_link.0 is not empty %}
+                  <a href="{{ content.field_external_link.0 }}" target="smci" class="smaller semibold" >
+                    <div class="readmore">More <i class="fa fa-angle-right"></i></div>
+                  </a>
+              {% endif %}  
+            </div>
+
+            <div class="col-xs-3 post-thumbnail">
+                {{ content.field_image }}
+            </div> 
+
+        </div>
+    </div>
+
+  </div>
+</article>  

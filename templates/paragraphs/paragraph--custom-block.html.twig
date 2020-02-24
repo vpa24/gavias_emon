@@ -1,0 +1,36 @@
+
+{%
+  set classes = [
+    'paragraph',
+    'paragraph--type--' ~ paragraph.bundle|clean_class,
+    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+  ]
+%}
+{% if content.field_classes['#items'][0].getString() is not empty %}
+    {% set classes = classes|merge(content.field_classes['#items'][0].getString()|split(' ')) %}
+{% endif %}
+
+{% block paragraph %}
+  <div{{ attributes.addClass(classes) }} style="clear: left"> 
+    {% block content %}
+
+      <div
+          {% if content.field_layout['#items'][0].getString() != 'Box' %}class="full-width"{% endif %}
+          {% if content.field_css['#items'][0].getString() is not empty %} 
+              style="{{ content.field_css['#items'][0].getString() }}"
+          {% endif %}          
+      >
+        {% if content.field_title.0 is not empty %} 
+          <div style="padding-top: 20px; width: 90%; left: 10%; position: relative;">
+            <h2>{{ content.field_title }}</h2>
+          </div>
+        {% endif %}          
+
+        <div>
+          {{ content.field_block }}
+        </div>
+      </div>
+
+    {% endblock %}
+  </div>
+{% endblock paragraph %}

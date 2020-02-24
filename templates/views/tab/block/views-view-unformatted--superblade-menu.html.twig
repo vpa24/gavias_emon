@@ -1,0 +1,44 @@
+{% if 'superblade' in path('<current>')|lower %}
+<div class="quick-links mobile-quick-links">
+    <div class="with-nav-tabs panel-default">
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="tab1default">
+
+                    <div class="selected-product-family product-family-tab">
+                      <div class="tabs tabs-style-underline">
+                        <nav>
+                          <ul>
+                            <li class="active" id="expand-product-family">
+                              <a href="#" >
+                                {% for row in rows %}                       
+                                  {% if row.content['#view'].style_plugin.render_tokens[ loop.index0 ]['{{ path }}']|trim in path('<current>') %}
+                                    {{ row.content['#view'].style_plugin.render_tokens[ loop.index0 ]['{{ title }}'] }}
+                                  {% endif %}  
+                                {% endfor %}
+                              </a>
+                              <span class="icaret nav-plus fa fa-angle-down"></span>
+                            </li>
+                          </ul>
+                        </nav>
+                      </div>
+                    </div>
+
+                    <div class="product-family-tab mobile-style-tab">
+                        <div class="tabs tabs-style-underline">
+                          <nav>
+                            <ul>
+                              {% for row in rows %}
+                                  {{ row.content }}
+                              {% endfor %}
+                            </ul>
+                          </nav>
+                        </div>
+                    </div>       
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

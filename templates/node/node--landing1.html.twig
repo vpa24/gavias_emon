@@ -1,0 +1,188 @@
+{#
+/**
+ * @file
+ * Bartik's theme implementation to display a node.
+ *
+ * Available variables:
+ * - node: The node entity with limited access to object properties and methods.
+     Only "getter" methods (method names starting with "get", "has", or "is")
+     and a few common methods such as "id" and "label" are available. Calling
+     other methods (such as node.delete) will result in an exception.
+ * - label: The title of the node.
+ * - content: All node items. Use {{ content }} to print them all,
+ *   or print a subset such as {{ content.field_example }}. Use
+ *   {{ content|without('field_example') }} to temporarily suppress the printing
+ *   of a given child element.
+ * - author_picture: The node author user entity, rendered using the "compact"
+ *   view mode.
+ * - metadata: Metadata for this node.
+ * - date: Themed creation date field.
+ * - author_name: Themed author name field.
+ * - url: Direct URL of the current node.
+ * - display_submitted: Whether submission information should be displayed.
+ * - attributes: HTML attributes for the containing element.
+ *   The attributes.class element may contain one or more of the following
+ *   classes:
+ *   - node: The current template type (also known as a "theming hook").
+ *   - node--type-[type]: The current node type. For example, if the node is an
+ *     "Article" it would result in "node--type-article". Note that the machine
+ *     name will often be in a short form of the human readable label.
+ *   - node--view-mode-[view_mode]: The View Mode of the node; for example, a
+ *     teaser would result in: "node--view-mode-teaser", and
+ *     full: "node--view-mode-full".
+ *   The following are controlled through the node publishing options.
+ *   - node--promoted: Appears on nodes promoted to the front page.
+ *   - node--sticky: Appears on nodes ordered above other non-sticky nodes in
+ *     teaser listings.
+ *   - node--unpublished: Appears on unpublished nodes visible only to site
+ *     admins.
+ * - title_attributes: Same as attributes, except applied to the main title
+ *   tag that appears in the template.
+ * - content_attributes: Same as attributes, except applied to the main
+ *   content tag that appears in the template.
+ * - author_attributes: Same as attributes, except applied to the author of
+ *   the node tag that appears in the template.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the main title tag that appears in the template.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the main title tag that appears in the template.
+ * - view_mode: View mode; for example, "teaser" or "full".
+ * - teaser: Flag for the teaser state. Will be true if view_mode is 'teaser'.
+ * - page: Flag for the full page state. Will be true if view_mode is 'full'.
+ * - readmore: Flag for more state. Will be true if the teaser content of the
+ *   node cannot hold the main body content.
+ * - logged_in: Flag for authenticated user status. Will be true when the
+ *   current user is a logged-in member.
+ * - is_admin: Flag for admin user status. Will be true when the current user
+ *   is an administrator.
+ *
+ * @see template_preprocess_node()
+ */
+#}
+{%
+  set classes = [
+    'node',
+    'node--type-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'node--promoted',
+    node.isSticky() ? 'node--sticky',
+    not node.isPublished() ? 'node--unpublished',
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+    'clearfix',
+    'landing1'
+  ]
+%}
+
+<style>
+    {% if file_url(node.field_image.entity.fileuri) != '/' %}
+    #landing1_image{
+        background-image:url('{{ file_url(node.field_image.entity.fileuri) }}');
+        height:400px;
+        background-repeat:no-repeat; 
+        background-position:center top;
+        padding-bottom:20px;
+        background-size:cover;
+    }
+    {% endif %}
+    #landing_title{
+            font-size: 30px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #222222;
+            font-family: "Montserrat";
+            margin: 0;
+            letter-spacing: -1px;
+            padding:15px 0 0px;
+    }    
+    </style>     
+    {{ content.field_banner_css }}
+
+{#
+  banner1 starts
+#}
+    {% if en_node.field_banner_title_image.entity.fileuri|render is not empty %}
+      <div class="landing1-banner" 
+          {% if file_url(node.field_banner_background.entity.fileuri) != '/' %}
+              style="background-image: url({{ file_url(node.field_banner_background.entity.fileuri) }})"
+          {% endif %}
+      >
+          <div class="landing1-banner-title">
+              {% if node.field_banner_title_image.entity.fileuri|render is not empty %}                  
+                  <img src="{{ file_url(node.field_banner_title_image.entity.fileuri) }}"  height="80" alt="" typeof="foaf:Image" />
+              {% elseif en_node.field_banner_title_image.entity.fileuri|render is not empty %}                  
+                       <img src="{{ file_url(en_node.field_banner_title_image.entity.fileuri) }}"  height="80" alt="" typeof="foaf:Image" />
+              {% else %}
+                        <h1>{{ content.field_banner_title }}</h1>
+              {% endif %}
+          </div>
+          <div class="landing1-banner-text">
+              {% if content.field_banner_text|render is not empty %}
+                    {{ content.field_banner_text }}
+              {% elseif en_node.field_banner_text.value|render is not empty %}
+                    {{ en_node.field_banner_text.value|raw }}
+              {% endif %}
+          </div>
+            {% set total = 0 %}</span>
+          
+            {% for key, item in en_node.field_product_images if key|first != '#' %}
+                {% set total = total + 1 %}
+            {% endfor %}
+            <div class="landing1-banner-products total{{ total }}">
+              {% for key, item in en_node.field_product_images if key|first != '#' %}
+                  <div class="landing1-banner-product">
+                      {% if content.field_product_links[loop.index0] is not empty and content.field_product_links[loop.index0]|render != '#' %}
+                          <a class="image-opacity-effect" href="{{ content.field_product_links[loop.index0] }}">
+                      {% endif %}                          
+                      <img src="{{ file_url(en_node.field_product_images[key].entity.fileuri) }}" usemap="#productmap{{ total }}" />
+                      {% if content.field_product_links[loop.index0] is not empty and content.field_product_links[loop.index0]|render != '#' %}
+                          </a>
+                      {% endif %}                                                  
+
+                      <div class="landing1-banner-product-title">
+                        {% if node.field_product_images[key].title|raw is not empty %}
+                            {{ node.field_product_images[key].title|raw }}
+                        {% else %}
+                            {{ en_node.field_product_images[key].title|raw }}
+                        {% endif %}    
+                      </div>
+
+                  </div>
+              {% endfor %}
+            </div>
+      </div>
+    {% endif %}     
+
+
+  
+{#
+  banner2 ends
+#}
+
+
+
+<article{{ attributes.addClass(classes)|without('about') }}>
+  <header>
+    {{ title_prefix }}
+    {% if not page %}
+      <h2{{ title_attributes.addClass('node__title') }}>
+        <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+      </h2>
+    {% endif %}
+    {% set title_suffix = '' %}
+    {{ title_suffix }}
+    {% if display_submitted %}
+      <div class="node__meta">
+        {{ author_picture }}
+        <span{{ author_attributes }}>
+          {% trans %}Submitted by {{ author_name }} on {{ date }}{% endtrans %}
+        </span>
+        {{ metadata }}
+      </div>
+    {% endif %}
+  </header>
+ 
+  <div{{ content_attributes.addClass('node__content', 'clearfix') }}> 
+      {% if content.field_product_family.0['#title'] %}<!--<h3 id="landing_title"><span>{{ content.field_product_family.0['#title'] }}</span></h3>-->{% endif %}
+      {% if content.body|render|striptags|trim is not empty %}<div class="widget gsc-heading  align-left style-1 text-dark" style="padding-top:5px !important;"><div class="title-desc">{{ content.body }}</div></div>{% endif %}
+      {{ content|without('field_image','field_product_family','body','field_banner_background','field_product_images','field_banner_title_image', 'field_banner_text','field_banner_css','field_banner_title','field_product_links') }}
+  </div>
+</article>

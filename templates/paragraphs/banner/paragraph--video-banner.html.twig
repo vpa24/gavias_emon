@@ -1,0 +1,109 @@
+<link rel="stylesheet" href="/sites/default/files/videoheader/css/style.css" media="all" />
+
+<style>
+.video-banner .home-section {
+    height: 380px;
+}
+
+.video-banner .content-div {
+  padding-left: 35px;
+  padding-right: 10px;
+  padding-top: 15px;
+  padding-bottom: 20px;
+  line-height: 1.5em;
+  color: white;
+}
+
+.video-banner a {
+  color: white;
+}
+
+.video-banner .title-div {
+    left: 35px;
+    bottom: 10px;
+    position: absolute;
+    letter-spacing: -1px;    
+}
+
+.video-banner .title {
+    font-size: 84px;
+    line-height: 1em;
+    padding-bottom: 15px;    
+}
+
+.video-banner .subtitle {
+    color: #888785;
+    font-size: 38px;
+    line-height: 1em;
+    letter-spacing: 0px;
+    min-height: 40px;
+}
+
+@media (max-width: 990px) {
+    .video-banner .title {
+        font-size: 4em;
+    }
+    .video-banner .subtitle {
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 760px) {
+    .video-banner .title {
+        font-size: 56px;
+    }
+    .video-banner .subtitle {
+        font-size: 1.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    .video-banner .home-section {
+      height: 300px;
+    }
+    .video-banner .title {
+        font-size: 50px;
+        padding-bottom: 0px;
+    }
+    .video-banner .subtitle {
+        font-size: 1.5em;
+        min-height: 5px;
+    }
+    .video-banner .site-branding-logo {
+        width: 60%;
+    }
+    .video-banner .title-div {
+        left: 30px;
+    }
+}
+</style>
+
+<main class="full-width video-banner banner">
+    <section class="home-section bg-dark-30"  id="home">
+        <div class="video-player" data-property="{videoURL:'https://youtu.be/{{ content.field_youtube_video_id.0 }}', showControls: false, containment:'.home-section', mobileFallbackImage:'{{ file_url(paragraph.field_image.entity.fileuri) }}'}"> </div>
+        <div class="overlay"> </div>
+        <div>
+            <a href="/index_home.cfm{{langlink}}" title="Home" rel="home" class="site-branding-logo padding-top-20" style="position: absolute; top: 0px; left: -15px">
+              <img src="/sites/default/files/logos/Supermicro_GreenC_NewLogo_DarkBackground_s.png" alt="Supermicro" style="width:80%">
+            </a>
+        </div>
+        <div class="title-div">
+            <div class="title">{{ content.field_headline.0 }}</div>
+            {% if content.field_headline2.0 is not empty %}
+                <div class="subtitle">{{ content.field_headline2.0 }}</div>
+            {% endif %}
+            {% if content.field_link_title.0 is not empty %}
+                <div class="gavias-slider" >
+                    <div class="slick-active">
+                        <div class="gavias-flip-x">
+                            <div class="slider-action">
+                                <a class="btn btn-slide btn-slide-outline" href="{{ content.field_link.0 }}">{{ content.field_link_title.0 }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}            
+
+        </div>
+    </section>
+</main>

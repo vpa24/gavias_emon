@@ -1,0 +1,138 @@
+{%
+  set classes = [
+    'paragraph',
+    'paragraph--type--' ~ paragraph.bundle|clean_class,
+    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+    'full-width'
+  ]
+%}
+{% if content.field_classes['#items'][0].getString() is not empty %}
+    {% set classes = classes|merge(content.field_classes['#items'][0].getString()|split(' ')) %}
+{% endif %}
+
+{% block paragraph %}
+
+    {#  background image #}
+    {% if paragraph.field_image.entity.fileuri|render is not empty %}
+        {% set classes = classes|merge(['parallax-window']) %}
+        <div{{ attributes.addClass(classes) }}
+             data-parallax="scroll"
+             data-image-src="{{ file_url(paragraph.field_image.entity.fileuri) }}"
+             {% if content.field_id['#items'][0].getString() is not empty %}id="{{ content.field_id['#items'][0].getString() }}"{% endif %}
+             style="padding-top: 100px; padding-bottom: 100px; {% if content.field_css['#items'][0].getString() is not empty %}{{ content.field_css['#items'][0].getString() }}{% endif %}"
+             data-position-y="0px">
+            <div>
+    {% else %}
+        <div{{ attributes.addClass(classes) }} 
+            {% if content.field_css['#items'][0].getString() is not empty %}style="{{ content.field_css['#items'][0].getString() }}"{% endif %}
+            {% if content.field_id['#items'][0].getString() is not empty %}id="{{ content.field_id['#items'][0].getString() }}"{% endif %}
+        >
+    {% endif %}
+
+
+    <div class="bb-container {% if content.field_layout['#items'][0].getString() != 'Full Width' %}container{% endif %} 
+                             {% if content.field_carousel_flag['#items'][0].getString() == '1' %}carousel{% else %}paragraph-boxes{% endif %}" >
+        
+        {% if content.field_title.0 is not empty or content.field_subtitle_html.0 is not empty %}
+            <div class="box-title">
+              {{ content.field_title.0 }}
+              {% if content.field_subtitle_html.0 is not empty %}
+                  <div class="box-subtitle" >{{ content.field_subtitle_html.0 }}</div>
+              {% endif %}              
+            </div>
+        {% endif %}
+
+
+        {% if content.field_carousel_flag['#items'][0].getString() == '1' %}
+            
+            <div class="gavias-slider" data-dots="true" {% if content.field_slides_to_show.0['#markup'] > 1 %}data-responsive="true"{% endif %}>
+                <div class="loading"><i class="fa fa-spinner fa-pulse fa-4x fa-fw"></i></div>
+                <div class="swiper-wrapper" data-slick='{"slidesToShow": {{ content.field_slides_to_show.0 }}, "slidesToScroll": {{ content.field_slides_to_show.0 }} }'>
+                    {% for key, item in content.field_box if key|first != '#' %}
+                        {% if content.field_box[loop.index0]['#paragraph'].field_hide_flag.value != '1' %}
+                            <div class="slide">
+                              {{ content.field_box[loop.index0] }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+        {% else %}
+              
+            <div class="row {% if content.field_equal_height['#items'][0].getString() == '1' %}row-eq-height{% endif %}" >
+                {# <div class="row-wrapper clearfix"> #}
+
+                  {% set total = 0 %}
+                  {% for key, item in content.field_box if key|first != '#' %}
+                      {% set total = total + 1 %}
+                  {% endfor %}
+
+                  {% set columnCount = content.field_number_of_columns['#items'][0].getString() %}
+
+                  {% for key, item in content.field_box if key|first != '#' %}
+                    {% set smCol = 6 %}
+                    {% if total == 3 %}
+                      {% set smCol = 4 %}
+                    {% endif %}
+
+                    {% if columnCount != 'AUTO' and columnCount is not empty %}
+                      {% set mdLgCol = 12 // columnCount %}
+                    {% elseif total == 2 %}
+                      {% set mdLgCol = 6 %}
+                    {% elseif total % 4 == 0 %}
+                      {% set mdLgCol = 3 %}
+                    {% elseif total % 3 == 0 %}
+                      {% set mdLgCol = 4 %}
+                    {% elseif total % 4 == 1 and total % 3 != 1 %}
+                      {% set mdLgCol = 4 %}
+                    {% elseif total % 4 != 1 and total % 3 == 1 %}
+                      {% set mdLgCol = 3 %}
+                    {% elseif total % 4 == 1 and total % 4 == 1 %}
+                      {% set mdLgCol = 3 %}
+                    {% elseif total < 3 %}
+                      {% set mdLgCol = 4 %}
+                    {% else %}
+                      {% set mdLgCol = 3 %}
+                    {% endif %}
+
+                    <div class="gsc-column
+                      {% if content.field_grid_classes['#items'][0].getString() is not empty %}
+                        {{ content.field_grid_classes['#items'][0].getString() }}
+                      {% else %}
+                         col-lg-{{ mdLgCol }} col-md-{{ mdLgCol }} col-sm-{{smCol}} col-xs-12
+                      {% endif %}
+                      ">
+                        {{ content.field_box[loop.index0] }}
+                    </div>
+
+
+{#
+                    {% if (mdLgCol == 4 and loop.index % 3 == 0) or (mdLgCol == 3 and loop.index % 4 == 0) %}
+                      <div class="clearfix hidden-sm hidden-xs"></div>
+                    {% endif %}
+
+                    {% if loop.index % 2 == 0 %}
+                      <div class="clearfix hidden-xs hidden-md hidden-lg"></div>
+                    {% endif %}
+#}
+
+                  {% endfor %}
+
+                {# </div> #}
+            </div>
+        {% endif %}
+
+    </div>
+
+    <div>
+      {{ content.field_footer }}
+    </div>
+
+</div>
+
+{% if paragraph.field_image.entity.fileuri|render is not empty %}
+    </div>
+{% endif %}
+
+{% endblock paragraph %}

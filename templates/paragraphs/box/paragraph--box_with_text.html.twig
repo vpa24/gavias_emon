@@ -1,0 +1,81 @@
+<style type="text/css">
+  .paragraph-box-with-text .team-body {
+      background-color: transparent;
+  }
+  .paragraph-box-with-text .team-body .team-position {
+    text-transform: none;
+  }
+  .paragraph-box-with-text .team-body .team-info {
+    color: initial;
+  }
+  .paragraph-box-with-text .team-body .team-info a {
+    text-decoration: underline;
+  }
+  .paragraph-box-with-text .team-body .team-info ul  {
+    padding-left: 20px;
+    font-size: 12px;
+  }
+  .paragraph-box-with-text .team-body .team-info ul li {
+    list-style: disc;
+  }
+</style>
+
+<div class="column-inner bg-size-cover paragraph-box-with-text">
+  <div class="column-content-inner">
+    <div class="widget gsc-team team-vertical scale-on-hover ">
+      <div class="widget-content text-center">
+      
+        {% if file_url(paragraph.field_image.entity.fileuri) != '/' %}
+          <div class="team-header text-center bg-white">
+            {% if content.field_smart_link.0 is not empty %}
+                <a href="{{ content.field_smart_link.0 }}">
+            {% endif %}
+            <img src="{{ file_url(paragraph.field_image.entity.fileuri) }}" class="img-responsive">  
+            {% if content.field_smart_link.0 is not empty %}
+                </a>
+            {% endif %}
+          </div>
+        {% endif %}
+  
+        <div class="team-body text-left">
+          <div class="team-body-content">
+            <h3 class="team-name">
+
+                  {% if content.field_smart_link.0 is not empty %}
+                    <a href="{{ content.field_smart_link.0 }}">
+                  {% endif %}
+                  {{ content.field_title }}
+                  {% if content.field_smart_link.0 is not empty %}
+                    </a>
+                  {% endif %}
+            </h3>
+            <div class="team-position">
+              {{ content.field_subtitle }}
+            </div>
+          </div>
+          <div class="team-info">
+            {{ content.field_body }}
+
+            {% set use_learn_more_button = content.field__learn_more_button['#items'][0].getString() %}
+            
+            {% set learn_more = 'Learn more' %}
+            {% if language == '/zh_tw' %}
+              {% set learn_more = '了解更多' %}
+            {% elseif language == '/zh_cn'%}
+              {% set learn_more = '了解更多' %}
+            {% elseif language == '/ja' %}
+              {% set learn_more = '詳細へ' %}
+            {% endif %}
+
+            {% if use_learn_more_button %}
+              <div class="readmore" style="margin-top: 1.5em">
+                <a href="{{ content.field_smart_link.0 }}" class="btn btn-theme" style="text-decoration: none; font-family: 'Roboto Condensed','Roboto',Helvetica,Arial,sans-serif; border-radius: 0">{{ learn_more }}</a>
+              </div>
+            {% endif %}
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

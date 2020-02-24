@@ -1,0 +1,15 @@
+<div
+	{% if content.field_classes['#items'][0].getString() is not empty %}class="{{ content.field_classes['#items'][0].getString() }}" {% endif %}
+    {% if content.field_css['#items'][0].getString() is not empty %}style="{{ content.field_css['#items'][0].getString() }}"{% endif %}
+    {% if content.field_id['#items'][0].getString() is not empty %}id="{{ content.field_id['#items'][0].getString() }}"{% endif %}
+>
+
+	<div class="image video-thumbnail">
+	  {{ content.field_youtube_video }}
+	</div>
+	<p class="text-third">{{ content.field_title['#items'][0].getString() }}</p>
+	{% if content.field_new_flag['#items'][0].getString() == '1' %}    
+	 	<div class="new-flag"></div>
+	{% endif %}	
+
+</div>

@@ -1,0 +1,18 @@
+<article class="portfolio-v1 col-lg-4 col-md-4 col-sm-6 col-xs-12 isotope-item no-padding {{ fields.tid.content|lower|striptags|trim }} {{ fields.tid_1.content|lower|striptags|trim }} {{ fields.tid_2.content|lower|striptags|trim }}  grid ">      
+   <div class="portfolio-content1">
+      <div class="row">
+         <div class="col-md-4 col-xs-4 scale-on-hover">
+            {{ fields.field_image.content }}
+            <div class="image-caption">
+               {{ fields.field_image_caption.content }}
+            </div>
+         </div>
+         <div class="col-md-8 col-xs-8">
+            <div class="product-sku">{{ fields.title.content }}</div>
+            <div class="key-features marked-list-green">
+               {{ fields.field_key_features.content }} 
+            </div>
+         </div>
+      </div>
+   </div>
+</article>

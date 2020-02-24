@@ -1,0 +1,233 @@
+body {
+	background-color: #fff;
+}
+
+
+.node--type-press-release.node--view-mode-full  a {
+    border-bottom: 1px solid #961919;
+    -webkit-transition: color .3s;
+    transition: color .3s;
+}	
+
+.node--type-press-release.node--view-mode-full p {
+	margin-top: 1em;
+}	
+
+.node--type-press-release.node--view-mode-full .node__content {
+	line-height: 1.5;
+}
+
+.node--type-press-release.node--view-mode-full .post-title {
+	line-height: 1.1;
+}
+
+.node--type-press-release.node--view-mode-full .pr-summary {
+	font-style: italic;
+    margin: 5px 0;
+}
+
+.pr-footer {
+	padding-top: 30px;
+	line-height: 1.5;	
+}
+
+form.views-exposed-form div {
+	display: inline-block;
+}
+
+form.views-exposed-form input {
+	width: 100px;
+}
+
+form.views-exposed-form input[name=keys] {
+	width: 200px;	
+}
+
+
+/* ------------------------------------------ */
+/* press release styles on News landing   */
+/* ------------------------------------------ */
+article.press-release-field {
+	padding-bottom: 15px;
+}
+
+article.press-release-field .post-block {
+	background-color: transparent;
+}
+article.press-release-field .post-content {
+	border: 1px solid #D9D9D9;
+	border-left: 8px solid #003a70;
+	padding: 10px;
+	background-color: white;
+}
+
+article.press-release-field .post-block .post-title a {
+	font-size: inherit;
+}
+
+article.press-release-field .post-block .post-meta {
+	margin: 5px 0;
+	font-size: 14px;
+	color: inherit;
+}
+
+article.press-release-field .post-block .readmore {
+	padding-top: 10px; 
+	font-size: 15px;
+}	
+
+
+/* ------------------------------------------ */
+/* event   */
+/* ------------------------------------------ */
+.event .widget.gsc-team.team-vertical {
+   padding: 20px 40px 5px;
+}
+.event .widget.gsc-team .team-name {
+   font-size: 18px;
+}
+.event a {
+   color: #222 !important;
+}
+.event a:hover, .event a:focus {
+    color: #961919  !important;
+}
+
+
+
+
+/* ------------------------------------------ */
+/* product review */
+/* ------------------------------------------ */
+.product-review {
+    background-color: white;
+    padding: 20px 30px;
+    /*margin-bottom: 30px;*/
+    height: 100%;
+    border: 1px solid #ddd;    
+}
+
+.product-review .news-thumbnail,
+.product-review .logo {
+    width: 25%;
+    padding: 5px;
+}
+
+.product-review .logo img {
+    max-height: 70px;
+    height: auto;
+}
+.product-review .news-thumbnail img {
+    max-height: 150px;
+    height: auto;
+}
+
+.product-review table,
+.product-review table>tbody>tr>td {
+    border: none;
+    line-height: inherit;
+    padding: 0px;
+
+}
+
+.product-review .content {
+    padding-left: 15px;
+    padding-bottom: 5px;
+}
+
+@media (max-width: 480px) {
+    .product-review .news-thumbnail {
+      display:none;      
+    }
+    .product-review .logo,
+    .product-review .content {
+      display: block;
+    }
+}
+
+
+
+/* ------------------------------------------ */
+/* news */
+/* ------------------------------------------ */
+.news .widget.gsc-team.team-vertical {
+   padding-bottom: 0px;
+}
+
+.news .widget.gsc-team.team-vertical .team-header img {
+  max-height: 80px;
+}
+
+.news {
+  padding: 25px 40px;
+}
+
+.news .publish-date {
+    margin: 5px 0;
+    font-size: 14px;
+    font-weight: 300;
+    color: #A4A4A4;
+    text-align: left !important;
+}
+
+.news .widget.gsc-team.team-vertical .team-name {
+  padding-top: 10px;
+  padding-bottom: 0px;
+}
+
+.news .widget.gsc-team.team-vertical .team-body {
+
+}
+
+.news .readmore {
+  padding-top: 0px;
+}
+
+.news .column-content-outer {
+  background-color: white; 
+  height:100%; 
+  padding: 5px 25px 15px;
+}
+
+
+
+/* ------------------------------------------ */
+/* search result */
+/* ------------------------------------------ */
+article.news-search-result {
+    padding-bottom: 0px;
+}
+
+article.news-search-result .post-block {
+    background: none;
+}
+
+article.news-search-result .post-block > .post-meta {
+    background-color: transparent; 
+    margin: 15px 0 2px; 
+    color: #003A70;
+}
+
+article.news-search-result .post-content {
+    background-color: white; 
+    padding: 10px 20px;
+}    
+
+article.news-search-result .post-content h3 {
+    font-size: 15px;
+}
+
+article.news-search-result .post-description {
+    margin-top: 5px; 
+    line-height: 1.2; 
+    font-size:15px;
+}
+
+article.news-search-result .video-thumbnail {
+ 	width: 200px;
+}
+
+article.news-search-result .readmore {
+    padding-top: 10px; 
+    font-size: 15px;
+}

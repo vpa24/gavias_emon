@@ -1,0 +1,72 @@
+
+
+/* ------------------------------------------ */
+/* breadcrumbs */
+/* ------------------------------------------ */
+.breadcrumbs {
+	border-top: 1px solid silver;
+    padding: 10px 0;
+    margin-bottom: 0px;
+    font-size: 13px;
+}
+
+.breadcrumbs nav.breadcrumb ol > li {
+    font-size: inherit;
+}
+
+.breadcrumbs .content-inner>div {
+	display: flex;
+}
+
+.breadcrumbs .block-system-breadcrumb-block {
+	flex: 1;
+}
+
+.breadcrumbs .content-inner>div>div:not(.block-system-breadcrumb-block){
+    /*font-size: 1.2rem;*/
+    font-weight: 600;
+    margin-left: auto;
+}
+
+
+.breadcrumbs .block {
+	margin-bottom: 0;	
+}
+
+.breadcrumbs .lang-switcher {
+    margin: 0;
+    padding-left: 20px;
+}
+
+#top-right-menu a {
+    padding: 0 10px;
+}
+
+.lang-switcher {
+    width: 120px;
+    display: inline-block;
+    background-image: url(/sites/default/files/inline-images/globe_32.png);
+    background-repeat: no-repeat;
+    background-size: 16px;
+    background-position-x: 0px;
+    background-position-y: 2px;
+    margin-right: 15px;
+}
+
+.lang-switcher select {
+    padding: 0px 2px 1px;
+}    
+
+.breadcrumbs .block:not(.lang-switcher)  {
+    padding-top: 3px;
+}
+
+
+@media (max-width: 991px) {
+	.breadcrumbs .block-system-breadcrumb-block {
+		visibility: hidden;
+	}
+	.gva-navigation {
+	    top: 82px;
+	}	
+}

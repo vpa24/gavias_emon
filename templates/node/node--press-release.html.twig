@@ -1,0 +1,693 @@
+{{ attach_library('gavias_emon/press_release') }}
+
+{%
+  set classes = [
+    'node',
+    'node-detail',
+    'node--type-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'node--promoted',
+    node.isSticky() ? 'node--sticky',
+    not node.isPublished() ? 'node--unpublished',
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+    'clearfix',
+  ]
+%}
+
+
+{% if node.id >= 1489 %}
+    {% set pr_contact_name = 'Greg Kaufman' %}
+{% else %}
+    {% set pr_contact_name = 'Michael Kalodrich' %}
+{% endif %}
+
+{% if teaser == true %}
+
+    {% set classes = classes|merge(['news-search-result']) %}
+    <article{{attributes.addClass(classes)}}>
+        <div class="post-block">
+            <div class="post-meta">
+                <span class="post-created">PRESS RELEASE</span>
+            </div>
+            <div class="post-content hover-shadow">
+                <div class="row">
+                    <div class="col-xs-12">
+
+                        <h3{{title_attributes.addClass('post-title')}}>
+                            <a href="{{ url }}" target="smci">{{ label }}</a>
+                            <div class="post-meta" style="margin:0">{{ content.field_date.0 }}</div>
+                        </h3>
+
+                        <div class="post-description">
+                            {{ content.body }}
+                        </div>
+
+                        <a href="{{ url }}" target="smci" class="smaller semibold">
+                            <div class="readmore">More
+                                <i class="fa fa-angle-right"></i>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </article>
+
+    {# 
+      <article{{ attributes.addClass(classes) }}>
+        <div class="post-block">
+          <div class="post-meta">
+            <span class="post-created"> {{ content.field_date }} </span>
+          </div>      
+          <div class="post-content">
+              <div class="row">
+                  <div class="col-xs-3 post-thumbnail">
+                    {% if post_format == 'video' or post_format == 'audio' and gva_iframe %}
+                      {{ gva_iframe|raw }}
+                    {% elseif post_format == 'gallery' and content.field_post_gallery %}
+                      {{ content.field_post_gallery }}
+                    {% else %}
+                      {{ content.field_thumbnail }}
+                    {% endif %}  
+                  </div>
+                  <div class="col-xs-9">
+    
+                     <h3{{ title_attributes.addClass('post-title') }}><a href="{{ url }}" rel="bookmark">{{ label }}</a></h3>
+                    <div class="post-description">
+                      {{ content.body }}
+                    </div>
+    
+                    <a href="{{ url }}" target="smci" class="smaller semibold" tabindex="0">     
+                      <div class="readmore">More <i class="fa fa-angle-right"></i></div>
+                    </a>
+                  </div>
+              </div>
+          </div>
+    
+        </div>
+      </article>  
+     #}
+
+{% else %}
+
+    <style>
+        .content-full {
+            background-color: white;
+        }
+    </style>
+    <article{{attributes.addClass(classes)}}>
+        <div class="post-block">
+
+            <div class="post-thumbnail">
+
+                {% if gva_iframe or content.field_post_gallery|e('html')|trim %}
+
+                    {% if gva_iframe %}
+                        <div class="thumbnail-video">
+                            {{ gva_iframe|raw }}
+                        </div>
+                    {% endif %}
+                    {% if content.field_post_gallery %}
+                        <div class="thumbnail-gallery">
+                            {{ content.field_post_gallery }}
+                        </div>
+                    {% endif %}
+
+                {% else %}
+
+                    <div class="thumbnail-image">
+                        {{ content.field_image }}
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+            <div class="post-content">
+                <h1{{title_attributes.addClass('post-title')}}>{{ label }}</h1>
+                <div class="pr-summary">{{ content.body['#object'].body.summary }}</div>
+
+                <div{{content_attributes.addClass('node__content','clearfix')}}>
+                    {{ content|without('field_image','field_image_file','field_pr_footer') }}
+                </div>
+
+                <div class="pr-image">
+                    {% if content.field_image_file['#items'][0].getString() is not empty %}
+                        <img src="{{ content.field_image_file['#items'][0].getString() }}">
+                    {% elseif content.field_image.entity.fileuri|render is not empty %}
+                        <img src="{{ file_url(content.field_image.entity.fileuri) }}">
+                    {% endif %}
+                </div>
+
+                <div class="pr-footer">
+
+                    {% if node.id >= 1489 %}
+
+                        {{ content.field_pr_footer }}
+
+                    {% else %}
+                        {# maintain backward compatibility with Press Releases that pre-date the addition of the 'PR Footer' field... #}
+
+                        {% if language == '/zh_tw' %}
+
+                            {% block more_info_zh_tw %}
+                                <p>關於 Supermicro 多種高性能高效率 SuperServer® 解決方案的更多資訊，請閱覽：
+                                    <a href="https://www.supermicro.com">www.supermicro.com</a>。</p>
+                                <p>敬請在<a href="https://www.facebook.com/Supermicro">
+                                        Facebook
+                                    </a>和<a href="https://twitter.com/Supermicro_SMCI">
+                                        Twitter
+                                    </a>上關注美超微，以瞭解該公司的最新新聞和公告。</p>
+                            {% endblock %}
+
+                            <p>
+                                <strong>美超微電腦股份有限公司</strong>
+                                <strong>(SMCI) 簡介</strong><br/>
+                                領先的高性能、高效率服務器技術創新企業美超微®（NASDAQ: SMCI）是用於數據中心、雲端運算、企業 IT、Hadoop／大數據、高性能運算和嵌入式系統的先進服務器 Building Block Solutions® 的全球首要供應商。美超微致力於透過其「We Keep IT Green®」計劃來保護環境，並且向客戶提供市面上最節能、最環保的解決方案。</p>
+
+                            {% block trademarks_zh_tw %}
+                                <p>Supermicro、BigTwin、SuperBlade、Server Building Block Solutions 和 We Keep IT Green 是美超微電腦股份有限公司的商標和／或注冊商標。</p>
+                            {% endblock %}
+
+                            <p>所有其他品牌、名稱和商標均是其各自所有者的財產。</p>
+
+                            <p>
+                                {% block contact_info_zh_tw %}
+                                    <strong>傳媒聯繫人</strong><br/>
+                                    {{ pr_contact_name }}<br/>
+                                    美超微電腦股份有限公司<br/>
+                                    電郵：<a href="mailto:PR@supermicro.com">PR@supermicro.com</a>
+                                {% endblock %}
+                            </p>
+
+                            <p>SMCI-F</p>
+
+                        {% elseif language == '/zh_cn' %}
+
+                            {% block more_info_zh_cn %}
+                                <p>关于 Supermicro 多种高性能高效率 SuperServer® 解决方案的更多信息，请访问：
+                                    <a href="https://www.supermicro.com">www.supermicro.com</a>。
+                                </p>
+                                <p>敬请在<a href="https://www.facebook.com/Supermicro">
+                                        Facebook
+                                    </a>和<a href="https://twitter.com/Supermicro_SMCI">
+                                        Twitter
+                                    </a>上关注美超微，以了解该公司的最新新闻和公告。</p>
+                            {% endblock %}
+
+                            <p>
+                                <strong>美超微电脑股份有限公司</strong>
+                                <strong>（SMCI）简介</strong><br/>
+                                领先的高性能、高效率服务器技术创新企业美超微® 是用于数据中心、云计算、企业IT、Hadoop／大数据、高性能计算和嵌入式系统的先进服务器 Building Block Solutions® 的全球首要供应商。美超微致力于通过其 “We Keep IT Green®” 计划来保护环境，并且向客户提供市面上最节能、最环保的解决方案。</p>
+
+                            {% block trademarks_zh_cn %}
+                                <p>Supermicro、BigTwin、SuperBlade、Server Building Block Solutions 和 We Keep IT Green 是美超微电脑股份有限公司的商标和／或注册商标。</p>
+                            {% endblock %}
+
+                            <p>所有其他品牌、名称和商标均是其各自所有者的财产。</p>
+            
+                            <p>
+                                {% block contact_info_zh_cn %}
+                                    <strong>媒体联系人</strong><br/>
+                                    {{ pr_contact_name }}<br/>
+                                    美超微电脑股份有限公司<br/>
+                                    电邮：<a href="mailto:PR@supermicro.com">PR@supermicro.com</a>
+                                {% endblock %}
+                            </p>
+
+                            <p>SMCI-F</p>
+
+                        {% elseif language == '/ja' %}
+
+                            {% block more_info_ja %}
+                                <p>Supermicro® のより詳細な SuperServer® に関する情報は、こちらからご確認ください。 visit
+                                    <a href="https://www.supermicro.com">www.supermicro.com</a>.</p>
+                                <p>
+                                    <span>Supermicro<span lang="JA"> の最新ニュースおよび発表資料は、</span>
+                                    </span>
+                                    <a href="https://www.facebook.com/Supermicro">
+                                        Facebook
+                                    </a>
+                                    <span lang="JA">や</span>
+                                    <a href="https://twitter.com/Supermicro_SMCI">
+                                        Twitter
+                                    </a>
+                                    <span lang="JA">で入手できます。</span>
+                                </p>
+                            {% endblock %}
+
+                            <p>
+                                <b>Super Micro Computer Inc.（NASDAQ: SMCI）について</b>
+                            </p>
+
+                            <p>Supermicro®（NASDAQ: SMCI） は、高性能・高効率のサーバーテクノロジーをリードするイノベーターです。世界中のデータセンターやクラウドコンピューティング、エンタープライズIT、Hadoop／ビッグデータ、HPC、組み込み型システム向けの高性能 Server Building Block Solutions® を提供する最先端プロバイダーです。Supermicro は「We Keep IT Green®」イニシアチブを通じて環境保護に尽力しており、最もエネルギー効率が高く、環境に優しいソリューションを顧客に提供しています。</p>
+
+                            {% block trademarks_ja %}
+                                <p>Supermicro、Server Building Block Solutions、We Keep IT Green は、Super Micro Computer, Inc. の商標または登録商標です。その他の社名、製品名などは、一般に各社の商標もしくは登録商標です。</p>
+                            {% endblock %}
+
+
+                            <p>
+                                {% block contact_info_ja %}
+                                    <strong>問い合わせ先:</strong><br/>
+                                    {{ pr_contact_name }}<br/>
+                                    Super Micro Computer, Inc.<br/>
+                                    <a href="mailto:pr@supermicro.com">pr@supermicro.com</a>
+                                {% endblock %}
+                            </p>
+
+                            <p>SMCI-F</p>
+
+                        {% elseif language == '/fr' %}
+
+                            {% block more_info_fr %}
+                                <p>Pour de plus amples informations sur Supermicro et les produits Supermicro, rendez-vous sur
+                                    <a href="https://www.supermicro.com" target="_blank">www.supermicro.com</a>.</p>
+                                <p>Suivez Supermicro sur
+                                    <a href="https://www.facebook.com/Supermicro" target="_blank">Facebook</a>
+                                    et
+                                    <a href="https://twitter.com/Supermicro_SMCI" target="_blank">Twitter</a>
+                                    pour recevoir les dernières nouvelles et communications.</p>
+                            {% endblock %}
+
+                            <p>
+                                <b>À propos de Super Micro Computer, Inc. (SMCI)
+                                    <br/></b>Supermicro®, l'innovateur majeur en technologies à hautes performances et à haut rendement pour les serveurs, est le principal fournisseur des serveurs évolués Server Building Block Solutions® pour les centres de données, l'informatique en nuage, l'informatique d'entreprise, l'Hadoop/Big Data, l'HPC et les systèmes embarqués du monde entier. Supermicro agit pour protéger l'environnement dans le cadre de son programme «  We Keep IT Green®  » et propose à ses clients les solutions les plus efficaces d'un point de vue énergétique et les plus écologiques du marché.</p>
+
+                            {% block trademarks_fr %}
+                                <p>Supermicro, SuperServer, BigTwin, Server Building Block Solutions et We Keep IT Green sont des marques et/ou des marques déposées appartenant à Super Micro Computer, Inc.</p>
+
+                                <p>Red Hat, Red Hat Enterprise Linux, OpenShift et the Red Hat logo sont des marques et/ou des marques déposées appartenant à Red Hat, Inc. ou ses filiales aux États-Unis et dans d'autres pays. Linux® est une marque déposée de Linus Torvalds aux États-Unis et dans d'autres pays.</p>
+                            {% endblock %}
+
+                            <p>Les autres marques, noms et marques commerciales appartiennent tous à leurs propriétaires respectifs.</p>
+                            <p>
+                                {% block contact_info_fr %}
+                                    <strong>Media Contact:</strong><br/>
+                                    {{ pr_contact_name }}<br/>
+                                    Super Micro Computer, Inc.<br/>
+                                    <a href="mailto:pr@supermicro.com">pr@supermicro.com</a>
+                                {% endblock %}
+                            </p>
+                            <p>SMCI-F</p>
+
+                        {% elseif language == '/de' %}
+
+                            {% block more_info_de %}
+                                <p>Für weitere Informationen über Supermicro und die Produkte von Supermicro besuchen Sie bitte
+                                    <a href="https://www.supermicro.com" target="_blank">www.supermicro.com</a>.</p>
+                                <p>Folgen Sie Supermicro auf
+                                    <a href="https://www.facebook.com/Supermicro" target="_blank">Facebook</a>
+                                    und
+                                    <a href="https://twitter.com/Supermicro_SMCI" target="_blank">Twitter</a>, um aktuelle Neuigkeiten und Mitteilungen zu erhalten.</p>
+                            {% endblock %}
+
+                            <p>
+                                <b>Informationen zu Super Micro Computer, Inc. (SMCI)<br/></b>Supermicro®, der führende Wegbereiter im Bereich hochleistungsfähiger und hocheffizienter Servertechnologie, zählt weltweit zu den führenden Anbietern von fortschrittlichen Server Building Block Solutions® für Rechenzentren, Cloud-Computing, Unternehmens-IT, Hadoop/Big Data, HPC sowie eingebetteten Systemen. Im Rahmen der „We Keep IT Green®"-Initiative engagiert sich Supermicro für den Umweltschutz und bietet Kunden die energieeffizientesten und umweltfreundlichsten Lösungen am Markt.</p>
+
+                            {% block trademarks_de %}
+                                <p>Supermicro, SuperServer, BigTwin, Server Building Block Solutions und We Keep IT Green sind Handelsmarken und/oder eingetragene Handelsmarken von Super Micro Computer, Inc.</p>
+                                <p>Red Hat, Red Hat Enterprise Linux, OpenShift und das Red Hat Logo sind Handelsmarken oder eingetragene Handelsmarken von Red Hat, Inc. oder seinen Tochtergesellschaften in den USA und anderen Ländern. Linux® ist die eingetragene Handelsmarke von Linus Torvalds in den USA und anderen Ländern.</p>
+                            {% endblock %}
+
+
+                            <p>Alle anderen Marken, Namen und Handelsmarken sind Eigentum ihrer jeweiligen Inhaber.</p>
+                            <p>
+                                {% block contact_info_de %}
+                                    <strong>Media Contact:</strong><br/>
+                                    {{ pr_contact_name }}<br/>
+                                    Super Micro Computer, Inc.<br/>
+                                    <a href="mailto:pr@supermicro.com">pr@supermicro.com</a>
+                                {% endblock %}
+                            </p>
+                            <p>SMCI-F</p>
+
+                        {% elseif language == '/it' %}
+
+                            {% block more_info_it %}
+                                <p>Per ulteriori informazioni su Supermicro e i prodotti Supermicro, visitate
+                                    <a href="https://www.supermicro.com" target="_blank">www.supermicro.com</a>.</p>
+                                <p>Seguite Supermicro su
+                                    <a href="https://www.facebook.com/Supermicro" target="_blank">Facebook</a>
+                                    e
+                                    <a href="https://twitter.com/Supermicro_SMCI" target="_blank">Twitter</a>
+                                    per ricevere le notizie e gli annunci più recenti.</p>
+                            {% endblock %}
+
+                            <p>
+                                <b>Informazioni su Super Micro Computer, Inc. (SMCI)
+                                    <br/></b>Supermicro®, innovatore leader di tecnologie di server ad alta efficienza e a prestazioni elevate è un fornitore primario di server avanzati Building Block Solutions® per centri dati, Cloud Computing, infrastrutture IT di grandi aziende, Hadoop/Big Data, HPC e sistemi integrati in tutto il mondo. Supermicro è impegnata nel rispetto dell'ambiente con l'iniziativa "We Keep IT Green®" fornendo ai clienti le soluzioni più efficienti dal punto di vista energetico ed ecologiche disponibili sul mercato.</p>
+
+                            {% block trademarks_it %}
+                                <p>Supermicro, SuperServer, BigTwin, Server Building Block Solutions e We Keep IT Green sono marchi commerciali e/o marchi commerciali registrati di Super Micro Computer, Inc.</p>
+                                <p>Red Hat, Red Hat Enterprise Linux, OpenShift e il logo Red Hat sono marchi commerciali o marchi registrati di Red Hat, Inc. o delle sue affiliate negli Stati Uniti e in altri Paesi. Linux® è il marchio registrato di Linus Torvalds negli Stati Uniti e in altri Paesi.</p>
+                            {% endblock %}
+
+                            <p>Tutti gli altri marchi, nomi, marchi commerciali sono di proprietà dei rispettivi proprietari.</p>
+                            <p>
+                                {% block contact_info_it %}
+                                    <strong>Media Contact:</strong><br/>
+                                    {{ pr_contact_name }}<br/>
+                                    Super Micro Computer, Inc.<br/>
+                                    <a href="mailto:pr@supermicro.com">pr@supermicro.com</a>
+                                {% endblock %}
+                            </p>
+                            <p>SMCI-F</p>
+
+                        {% elseif language == '/ko' %}
+
+                            {% block more_info_ko %}
+                                <p>슈퍼마이크로와 슈퍼마이크로 제품에 대한 상세 정보가 필요할 경우
+                                    <a href="https://www.supermicro.com" target="_blank">www.supermicro.com</a>을 방문하기 바란다.
+                                </p>
+                                <p>슈퍼마이크로의 최신 뉴스와 발표 내용을 보려면
+                                    <a href="https://www.facebook.com/Supermicro" target="_blank">페이스북</a>과
+                                    <a href="https://twitter.com/Supermicro_SMCI" target="_blank">트위터</a>에서 Supermicro를 팔로우하기 바란다.
+                                </p>
+                            {% endblock %}
+
+                            <p>
+                                <b>슈퍼마이크로컴퓨터</b>
+                                <b>(SMCI)<br/></b>고성능, 고효율 서버 기술을 리드하는 혁신 기업인 슈퍼마이크로®는 전세계의 데이터센터, 클라우드 컴퓨팅, 기업용 IT, 하둡/빅데이터, HPC 와 임베디드 시스템을 위한 첨단 서버빌딩블록솔루션즈 (Server Building Block Solutions®) 의 최고 공급 업체이다. 슈퍼마이크로는 동사의 "우리는 그린 IT를 지킨다 (We Keep IT Green®)" 라는 운동을 통해 환경 보호에 공헌하고 있으며 최고로 에너지 효율적이며 친환경적인 솔루션을 고객들에게 시장에서 공급하고 있다.
+                            </p>
+
+                            {% block trademarks_ko %}
+                                <p>Supermicro, SuperServer, BigTwin, Server Building Block Solutions 와 We Keep IT Green 은 슈퍼마이크로컴퓨터의 상표 및/혹은 등록상표이다.</p>
+                                <p>Red Hat, Red Hat Enterprise Linux, OpenShift 와 Red Hat 로고는 레드햇과 미국 혹은 기타 국가에 소재한 동사 자회사들의 상표 혹은 등록상표이다. 리눅스® 는 리누스 토발즈가 미국과 기타 국가에 등록한 상표이다.
+                            {% endblock %}
+
+                            </p>
+                            <p>기타 모든 브랜드, 명칭과 상표는 그들 각 소유자들의 재산이다.
+                            </p>
+                            <p>
+                                {% block contact_info_ko %}
+                                    <strong>연락처:</strong><br/>
+                                    {{ pr_contact_name }}<br/>
+                                    슈퍼마이크로컴퓨터<br/>
+                                    <a href="mailto:pr@supermicro.com">pr@supermicro.com</a>
+                                {% endblock %}
+                            </p>
+                            <p>SMCI-F</p>
+
+                        {% elseif language == '/es' %}
+
+                            {% block more_info_es %}
+                                <p>Para obtener más información sobre Supermicro y sus productos, visite
+                                    <a href="https://www.supermicro.com" target="_blank">www.supermicro.com</a>.</p>
+                                <p>Siga a Supermicro en
+                                    <a href="https://www.facebook.com/Supermicro" target="_blank">Facebook</a>
+                                    y
+                                    <a href="https://twitter.com/Supermicro_SMCI" target="_blank">Twitter</a>
+                                    para recibir las últimas noticias y anuncios.</p>
+                            {% endblock %}
+
+                            <p>
+                                <b>Acerca de Super Micro Computer, Inc. (SMCI)</b><br/>Supermicro®, la empresa de innovación líder en tecnologías de servidor de alto rendimiento y elevada eficiencia es un proveedor de primer orden de servidores avanzados Server Building Block Solutions® para centros de datos, computación en la nube, TI empresarial, Hadoop/datos masivos, HPC y sistemas integrados en todo el mundo. Supermicro está comprometida con la protección del medio ambiente a través de su iniciativa "We Keep IT Green®" y provee a sus clientes las soluciones más eficientes en términos energéticos y respetuosas con el medio ambiente disponibles en el mercado.</p>
+
+                            {% block trademarks_es %}
+                                <p>Supermicro, SuperServer, BigTwin, Server Building Block Solutions y We Keep IT Green son marcas comerciales o marcas comerciales registradas de Super Micro Computer, Inc.</p>
+                                <p>Red Hat, Red Hat Enterprise Linux, OpenShift y el logotipo de Red Hat son marcas comerciales o marcas comerciales registradas de Red Hat, Inc. o de sus empresas filiales en los Estados Unidos u otros países. Linux® es una marca registrada de Linus Torvalds en los Estados Unidos u otros países.</p>
+                            {% endblock %}
+
+                            <p>Todas las demás marcas, nombres o marcas comerciales son propiedad de sus respectivos propietarios.</p>
+                            <p>
+                                {% block contact_info_es %}
+                                    <strong>Media Contact:</strong><br/>
+                                    {{ pr_contact_name }}<br/>
+                                    Super Micro Computer, Inc.<br/>
+                                    <a href="mailto:pr@supermicro.com">pr@supermicro.com</a>
+                                {% endblock %}
+                            </p>
+                            <p>SMCI-F</p>
+                        {% elseif language == '/pt-pt' %}
+
+                            {% block more_info_pt %}
+                                <p>Para obter informações completas sobre a Supermicro e produtos da Supermicro, visite
+                                    <a href="https://www.supermicro.com" target="_blank">www.supermicro.com</a>.</p>
+                                <p>Siga a Supermicro no
+                                    <a href="https://www.facebook.com/Supermicro" target="_blank">Facebook</a>
+                                    e no
+                                    <a href="https://twitter.com/Supermicro_SMCI" target="_blank">Twitter</a>
+                                    para receber as últimas notícias e anúncios.</p>
+                            {% endblock %}
+
+                            <p>
+                                <b>Sobre a Super Micro Computer, Inc. (SMCI)<br/></b>A Supermicro®, principal inovadora em tecnologia de servidores de alto desempenho e alta eficiência, é uma grande fornecedora de Building Block Solutions® de servidores avançados para centros de dados, computação em nuvem, TI empresarial,
+                                <i>Hadoop/Big Data</i>, HPC e sistemas embutidos, em todo o mundo. A Supermicro assumiu o compromisso de proteger o meio ambiente através da iniciativa "We Keep IT Green®" e fornece aos clientes as soluções mais eficientes energeticamente e amigáveis ao meio ambiente disponíveis no mercado.</p>
+
+                            {% block trademarks_pt_pt %}
+                                <p>Supermicro, SuperServer, BigTwin, Server Building Block Solutions e We Keep IT Green são marcas comerciais e/ou marcas comerciais registradas da Super Micro Computer, Inc.</p>
+                                <p>Red Hat, Red Hat Enterprise Linux, OpenShift e o logo da Red Hat são marcas comerciais ou marcas comerciais registradas da Red Hat, Inc. ou de suas subsidiárias nos EUA e em outros países. Linux® é marca comercial registrada da Linus Torvalds nos EUA e em outros países.</p>
+                            {% endblock %}
+
+                            <p>Todas as demais marcas, nomes e marcas comerciais pertencem a suas respectivas proprietárias.</p>
+                            <p>
+                                {% block contact_info_pt_pt %}
+                                    <strong>Media Contact:</strong><br/>
+                                    {{ pr_contact_name }}<br/>
+                                    Super Micro Computer, Inc.<br/>
+                                    <a href="mailto:pr@supermicro.com">pr@supermicro.com</a>
+                                {% endblock %}
+                            </p>
+                            <p>SMCI-F</p>
+
+                        {% elseif language == '/ru' %}
+
+                            {% block more_info_ru %}
+                                <p>Для получения дополнительной информации о Supermicro и продукции компании посетите веб-сайт
+                                    <u>
+                                        <a href="https://www.supermicro.com" target="_blank">www.supermicro.com</a>
+                                    </u>.</p>
+                                <p>Следите за новостями Supermicro в
+                                    <u>
+                                        <a href="https://www.facebook.com/Supermicro" target="_blank">Facebook</a>
+                                    </u>
+                                    и
+                                    <u>
+                                        <a href="https://twitter.com/Supermicro_SMCI" target="_blank">Twitter</a>
+                                    </u>.</p>
+                            {% endblock %}
+
+                            <p>
+                                <b>О</b>
+                                <b>компании</b>
+                                <b>
+                                    Super Micro Computer, Inc.
+                                </b>
+                                <b>(SMCI)
+                                    <br/></b>Компания Supermicro®, передовой новатор в сфере высокоэффективных серверных технологий, является ведущим поставщиком передовых серверных решений Building Block Solutions® для информационных центров, облачных вычислений, высокопроизводительных вычислительных центров, корпоративных ИТ, Hadoop/Больших данных и встроенных систем. Supermicro ответственно подходит к защите окружающей среды; инициатива «We Keep IT Green®» позволяет предоставлять клиентам самые энергоэффективные и экологически чистые решения из всех доступных на рынке.</p>
+
+                            {% block trademarks_ru %}
+                                <p>Supermicro, SuperServer, BigTwin, Server Building Block Solutions и We Keep IT Green являются торговыми марками и/или зарегистрированными торговыми марками Super Micro Computer, Inc.</p>
+                                <p>Red Hat, Red Hat Enterprise Linux, OpenShift и логотип Red Hat являются торговыми марками или зарегистрированными торговыми марками Red Hat, Inc. или ее дочерних предприятий в США и других странах мира. Linux® является зарегистрированной торговой маркой Linus Torvalds в США и других странах мира.</p>
+                            {% endblock %}
+     
+                            <p>Все остальные марки, названия и торговые марки являются собственностью соответствующих владельцев.</p>
+                            <p>
+                                {% block contact_info_ru %}
+                                    <strong>Media Contact:</strong><br/>
+                                    {{ pr_contact_name }}<br/>
+                                    Super Micro Computer, Inc.<br/>
+                                    <a href="mailto:pr@supermicro.com">pr@supermicro.com</a>
+                                {% endblock %}
+                            </p>
+                            <p>SMCI-F</p>
+
+                        {% elseif language == '/vi' %}
+
+                            {% block more_info_vi %}
+                                <p>Để biết thêm thông tin về Supermicro và các sản phẩm của Supermicro, xin truy cập <a href="https://www.supermicro.com/">www.supermicro.com</a>.
+                                    <br>
+                                    Theo dõi Supermicro trên Facebook <a href="https://www.facebook.com/Supermicro">Facebook</a> và <a href="https://twitter.com/Supermicro_SMCI">Twitter</a> để nhận các thông tin và thông cáo mới nhất.</p>
+                            {% endblock %}
+
+                            <p>
+                                <strong>Giới thiệu Super Micro Computer, Inc. (NASDAQ: SMCI)</strong>
+                            </p>
+                            <p>Supermicro®, công ty đổi mới hàng đầu về công nghệ máy chủ hiệu suất cao, là nhà cung cấp hàng đầu các Giải pháp khối xây dựng máy chủ® tiên tiến cho Trung tâm dữ liệu, Điện toán đám mây, doanh nghiệp công nghệ thông tin (IT), Hadoop/Dữ liệu lớn, HPC và các Hệ thống nhúng trên thế giới. Supermicro cam kết bảo vệ môi trường thông qua sáng kiến "Chúng tôi duy trì IT Xanh®" và cung cấp cho khách hàng các giải pháp thân thiện với môi trường, tiết kiệm năng lượng nhất hiện có trên thị trường.</p>
+
+                            {% block trademarks_vi %}
+                                <p>Supermicro, SuperBlade, BigTwin, FatTwin, các Giải pháp khối xây dựng máy chủ và "Chúng tôi duy trì IT Xanh®" là các thương hiệu và/hoặc nhãn hiệu đã đăng ký của Super Micro Computer, Inc.</p>
+                            {% endblock %}
+
+                            <p>Tất cả các thương hiệu, tên và các nhãn hiệu khác là tài sản của chủ sở hữu tương ứng.</p>
+
+                            <p>
+                                {% block contact_info_vi %}
+                                    <strong>Liên hệ:</strong><br/>
+                                    {{ pr_contact_name }}<br/>
+                                    Super Micro Computer, Inc.<br/>
+                                    <a href="mailto:pr@supermicro.com">pr@supermicro.com</a>
+                                {% endblock %}
+                            </p>
+
+                            <p>SMCI-F</p>
+                        {% elseif language == '/th' %}
+
+                            {% block more_info_th %}
+                                <p>รับชมข้อมูลเพิ่มเติมเกี่ยวกับ Supermicro และผลิตภัณฑ์ของ Supermicro ได้ที่ <a href="https://www.supermicro.com/">www.supermicro.com</a>.
+                                    <br>
+                                    ติดตาม Supermicro ได้ทาง <a href="https://www.facebook.com/Supermicro">Facebook</a> และ <a href="https://twitter.com/Supermicro_SMCI">Twitter</a> เพื่อรับข่าวสารและประกาศล่าสุดจากทางบริษัท</p>
+                            {% endblock %}
+
+                            <p>
+                                <strong>เกี่ยวกับ Super Micro Computer, Inc. (SMCI)</strong>
+                            </p>
+
+                            <p>Supermicro® คือผู้นำด้านเทคโนโลยีเซิร์ฟเวอร์ประสิทธิภาพสูง และเป็นผู้จัดหาโซลูชันต่าง ๆ เช่น Server Building Block Solutions® for Data Center, Cloud Computing, Enterprise IT, Hadoop/Big Data, HPC และ Embedded Systems ให้กับลูกค้าทั่วโลก Supermicro มุ่งมั่นปกป้องสิ่งแวดล้อมผ่านโครงการ "We Keep IT Green®" พร้อมส่งมอบโซลูชันที่เป็นมิตรต่อสิ่งแวดล้อมและประหยัดพลังงานมากที่สุดในตลาดให้แก่ลูกค้า</p>
+
+                            {% block trademarks_th %}
+                                <p>Supermicro, SuperBlade, BigTwin, FatTwin, Server Building Block Solutions และ We Keep IT Green เป็นเครื่องหมายการค้า และ/หรือ เครื่องหมายการค้าจดทะเบียนของ Super Micro Computer, Inc.</p>
+                            {% endblock %}
+
+                            <p>สำหรับแบรนด์ ชื่อ และเครื่องหมายการค้าอื่น ๆ ทั้งหมดเป็นทรัพย์สินของผู้เป็นเจ้าของ</p>
+
+                            <p>
+                                {% block contact_info_th %}
+                                    <strong>ติดต่อ:</strong><br/>
+                                    {{ pr_contact_name }}<br/>
+                                    Super Micro Computer, Inc.<br/>
+                                    <a href="mailto:pr@supermicro.com">pr@supermicro.com</a>
+                                {% endblock %}
+                            </p>
+
+                            <p>SMCI-F</p>
+
+                        {% elseif language == '/id' %}
+
+                            {% block more_info_id %}
+                                <p>Untuk informasi lebih lanjut tentang Supermicro dan berbagai produk Supermicro, kunjungi <a href="https://www.supermicro.com/">www.supermicro.com</a>.
+                                    <br>
+                                    Ikuti akun Supermicro di <a href="https://www.facebook.com/Supermicro">Facebook</a> dan <a href="https://twitter.com/Supermicro_SMCI">Twitter</a> untuk memperoleh sejumlah kabar dan pengumuman terbaru.</p>
+                            {% endblock %}
+
+                            <p>
+                                <strong>Tentang Super Micro Computer, Inc. (SMCI)</strong>
+                            </p>
+
+                            <p>Supermicro®, inovator terkemuka dalam teknologi server yang berkinerja dan berefisiensi tinggi, merupakan vendor terdepan untuk server <i>Building Block Solutions®</i> yang mutakhir untuk Pusat Data, <i>Cloud Computing</i>, <i>Enterprise IT</i>, <i>Hadoop/Big Data</i>, HPC dan <i>Embedded Systems</i> di seluruh dunia. Supermicro bertekad melestarikan lingkungan hidup melalui inisiatif bertajuk "We Keep IT Green®", dan menghadirkan berbagai solusi yang paling hemat energi dan ramah lingkungan di pasaran.</p>
+
+                            {% block trademarks_id %}
+                                <p><i>Supermicro</i>, <i>SuperBlade</i>, <i>BigTwin</i>, <i>FatTwin</i>, <i>Server Building Block Solutions</i>, dan <i>We Keep IT Green</i> adalah merek dagang dan/atau merek dagang terdaftar milik Super Micro Computer, Inc.</p>
+                            {% endblock %}
+
+                            <p>Merek-merek, nama dan merek dagang lainnya dimiliki oleh pihak-pihak terkait.</p>
+
+                            <p>
+                                {% block contact_info_id %}
+                                    <strong>Narahubung:</strong><br/>
+                                    {{ pr_contact_name }}<br/>
+                                    Super Micro Computer, Inc.<br/>
+                                    <a href="mailto:pr@supermicro.com">pr@supermicro.com</a>
+                                {% endblock %}
+                            </p>
+
+                            <p>SMCI-F</p>
+
+                        {% elseif language == '/ms' %}
+
+                            {% block more_info_ms %}
+                                <p>Untuk maklumat lanjut tentang Supermicro dan produk Supermicro, kunjungi <a href="https://www.supermicro.com/">www.supermicro.com</a>.
+                                    <br>
+                                    Ikuti Supermicro di <a href="https://www.facebook.com/Supermicro">Facebook</a> dan <a href="https://twitter.com/Supermicro_SMCI">Twitter</a> untuk menerima berita dan pengumuman terkini mereka.</p>
+                            {% endblock %}
+
+                            <p>
+                                <strong>Latar Belakang Super Micro Computer, Inc. (SMCI)</strong>
+                            </p>
+
+                            <p>Supermicro®, penginovasi utama bagi teknologi pelayan berprestasi tinggi dan berkecekapan tinggi ialah penyedia ulung bagi pelayan Server Building Block Solutions® termaju untuk Pusat Data, Pengkomputeran Awan, IT Perusahaan, Hadoop/Data Raya, HPC dan Sistem Terbenam seluruh dunia. Supermicro komited untuk melindungi alam sekitar melalui inisiatif "We Keep IT Green®" dan menyediakan pelanggan dengan penyelesaian paling cekap tenaga dan mesra alam yang terdapat dalam pasaran.</p>
+                            
+                            {% block trademarks_ms %}
+                                <p>Supermicro, SuperBlade, BigTwin, FatTwin, Server Building Block Solutions dan We Keep IT Green ialah tanda dagangan dan/atau tanda dagangan berdaftar Super Micro Computer, Inc.</p>
+                            {% endblock %}
+
+                            <p>Semua jenama, nama dan tanda dagangan lain adalah hak milik pemilik masing-masing.</p>
+
+                            <p>
+                                {% block contact_info_ms %}
+                                    <strong>Hubungi:</strong><br/>
+                                    {{ pr_contact_name }}<br/>
+                                    Super Micro Computer, Inc.<br/>
+                                    <a href="mailto:pr@supermicro.com">pr@supermicro.com</a>
+                                {% endblock %}
+                            </p>
+
+                            <p>SMCI-F</p>
+
+                        {% elseif language == '/hi' %}
+                            
+                            {% block more_info_hi %}
+                                {# <p>For complete information on SuperServer® solutions from Supermicro, visit <a href="https://www.supermicro.com/">www.supermicro.com</a>.
+                                    <br>
+                                    Follow Supermicro on <a href="https://www.facebook.com/Supermicro">Facebook</a> and <a href="https://twitter.com/Supermicro_SMCI">Twitter</a> to receive their latest news and announcements.</p> #}
+                            {% endblock %}
+
+
+                            <p><strong>सुपर माइक्रो कंप्यूटर, इंक (एसएमसीआई) के बारे में</strong></p>
+
+                            <p>Supermicro®, उच्र् प्रदशवन, उच्र् कायवक्षमता सर्वर प्रौद्योसगकी में अग्रणी प्रर्वतक डेटा सेंटर, क्िाउड कम्प्यूसटंग, एंटरप्राइज आईटी, हडूप/ सबग डेटा (Hadoop/Big Data), HPC और अंतःस्थासपत प्रणािी (Embedded Systems) के सिए दुसनया भर में Server Building Block Solutions® का एक प्रमुख प्रदाता है। सुपरमाइक्रो अपने "We Keep IT Green®" पहि के माध्यम से पयावर्रण की रक्षा करने के सिए प्रसतबद्ध है और ग्राहकों को बाजार में उपिब्लध सबसे असधक ऊजाव कायवक्षम, पयावर्रण के अनुकूि समाधान प्रदान करता है।</p>
+                            
+                            {% block trademarks_hi %}
+                                <p>सुपरमाइक्रो, सबस्डंग ब्लिॉक सॉ्यूशंस (Server Building Block Solutions), और र्ी कीप आईटी ग्रीन (We Keep IT Green) सुपर माइक्रो कंप्यूटर, इंक. के ट्रेडमाकव और / या पंजीक त ट्रेडमाकव हैं।</p>
+                            {% endblock %}
+
+                            <p>अन्य सभी ब्रांड, नाम और ट्रेडमाकव उनके संबंसधत मासिकों की संपसि हैं।</p>
+                            
+                            <p>
+                                {% block contact_info_hi %}
+                                    <strong>संपकव:</strong><br />
+                                    {{ pr_contact_name}}<br />
+                                    सुपर माइक्रो कंप्यूटर, इंक.<br />
+                                    <a href="mailto:pr@supermicro.com">pr@supermicro.com</a>
+                                {% endblock %}
+                            </p>
+
+                            <p>एसएमसीआई-एफ (SMCI-F)</p>
+
+                        {% else %}
+
+                            {% block more_info_en %}
+                                <p>For complete information on SuperServer® solutions from Supermicro, visit <a href="https://www.supermicro.com/">www.supermicro.com</a>.
+                                    <br>
+                                    Follow Supermicro on <a href="https://www.facebook.com/Supermicro">Facebook</a> and <a href="https://twitter.com/Supermicro_SMCI">Twitter</a> to receive their latest news and announcements.</p>
+                            {% endblock %}
+
+                            <p>
+                                <strong>About Super Micro Computer, Inc. (NASDAQ: SMCI)</strong>
+                            </p>
+
+                            <p>Supermicro (NASDAQ: SMCI), the leading innovator in high-performance, high-efficiency server technology is a premier provider of advanced server Building Block Solutions® for Data Center, Cloud Computing, Enterprise IT, Hadoop/Big Data, HPC and Embedded Systems worldwide. Supermicro is committed to protecting the environment through its “We Keep IT Green®” initiative and provides customers with the most energy-efficient, environmentally-friendly solutions available on the market.</p>
+                            
+                            {% block trademarks_en %}
+                                <p>Supermicro, Building Block Solutions and We Keep IT Green are trademarks and/or registered trademarks of Super Micro Computer, Inc.</p>
+                            {% endblock %}
+
+                            <p>All other brands, names and trademarks are the property of their respective owners.</p>
+
+                            <p>
+                                {% block contact_info_en %}
+                                    <strong>Media Contact:</strong><br/>
+                                    {{ pr_contact_name }}<br/>
+                                    Super Micro Computer, Inc.<br/>
+                                    <a href="mailto:pr@supermicro.com">pr@supermicro.com</a>
+                                {% endblock %}
+                            </p>
+
+                            <p>SMCI-F</p>
+
+                        {% endif %}
+
+                        {% block pr_footer_extra %}{% endblock %}
+                    {% endif %}
+                </div>
+
+            </div>
+
+        </div>
+
+    </article>
+
+
+{% endif %}

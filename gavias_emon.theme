@@ -1,0 +1,321 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the Bartik theme.
+ */
+
+use Drupal\Core\Template\Attribute;
+
+$theme_path = drupal_get_path('theme', 'gavias_emon');
+
+include_once $theme_path . '/includes/template.functions.php';
+include_once $theme_path . '/includes/functions.php';
+include_once $theme_path . '/includes/template.menu.php';
+include_once $theme_path . '/includes/oembed.php';
+include_once $theme_path . '/includes/override.php';
+include_once $theme_path . '/includes/shortcodes.php';
+
+function gavias_emon_preprocess_page(&$variables) {
+
+  global $theme, $base_url;
+  $theme_path = drupal_get_path('theme', 'gavias_emon');
+  $variables['sticky_menu'] = theme_get_setting('sticky_menu');
+  $variables['enterprise_style'] = theme_get_setting('enterprise');
+  
+  $header = 'header';
+
+  if(!empty(theme_get_setting('header_skin'))){
+    $header = theme_get_setting('header_skin');
+  }
+  if(isset($_GET['gvask']) && $_GET['gvask']){
+    $header = $_GET['gvask'];
+  }
+  if(file_exists($theme_path . '/templates/page/' . trim($header) . '.html.twig')){
+    $variables['header_skin'] = '/templates/page/' . trim($header) . '.html.twig';
+  }else{
+    $variables['header_skin'] = '/templates/page/header-2.html.twig';
+  }
+
+  if(theme_get_setting('preloader') == '1'){
+    $variables['preloader'] = 1;
+  }else{
+    $variables['preloader'] = 0;
+  }
+
+  $variables['theme_path'] = $base_url . '/' . $theme_path;  
+  
+  $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
+  switch($language){
+      case "zh-hant":
+          $language = "zh_tw";
+          break;
+      case "zh-hans":
+          $language = "zh_cn";
+          break;
+  }
+  $variables['language'] = $language;
+  
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for HTML document templates.
+ *
+ * Adds body classes if certain regions have content.
+ */
+function gavias_emon_preprocess_html(&$variables) {
+  global $theme, $base_url;
+  global $parent_root;
+  $theme_path = drupal_get_path('theme', 'gavias_emon');
+  
+  //Customize
+  $user = \Drupal::currentUser();
+
+  if(  \Drupal::moduleHandler()->moduleExists('gaviasthemer') && ($user->hasPermission('administer gavias_customize') || $user->hasPermission('administer gavias_customize preview')) && theme_get_setting('enable_panel') == '1'  ){
+    $url_customize_save = \Drupal::url('gaviasthemer.admin.customize_save', array(), array('absolute' => TRUE));
+    $variables['#attached']['drupalSettings']['gavias_customize']['save'] = $url_customize_save;  
+    $url_customize_preview = \Drupal::url('gaviasthemer.admin.customize_preview', array(), array('absolute' => TRUE));
+    $variables['#attached']['drupalSettings']['gavias_customize']['preview'] = $url_customize_preview;  
+    $variables['#attached']['library'][] = 'gaviasthemer/customize';
+    if(file_exists(drupal_get_path('theme', 'gavias_emon') . '/css/customize.json')){
+      $variables['#attached']['drupalSettings']['gavias_customize']['path_json'] =  base_path() . $theme_path . '/css/customize.json';  
+    }else{
+      $variables['#attached']['drupalSettings']['gavias_customize']['path_json'] = '';
+    }
+    $variables['addon_template'] = '';
+    $variables['save_customize_permission'] = 'hidden';
+    if(file_exists($theme_path . '/templates/addon/skins.html.twig')){
+      $variables['addon_template'] = '/templates/addon/skins.html.twig';
+    }
+    if($user->hasPermission('administer gavias_customize')){
+      $variables['save_customize_permission'] = 'show';
+    }
+    $current_url = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+    $current_url = preg_replace('/([?&])display=[^&]+(&|$)/','$2',$current_url);
+    if(strpos($current_url, '?')){
+       $current_url .= '&';
+    }
+    else{
+       $current_url .= '?';
+    }
+    $variables['current_url'] = $current_url;
+  }
+
+  $tmp_logo = theme_get_setting('logo');
+
+  $variables['site_logo'] = $tmp_logo['url'];
+  
+  $variables['theme_path'] = base_path() . $theme_path;
+  $custom_style = '';
+  if(theme_get_setting('customize_css') ){
+    // $config = \Drupal::config('gavias_emon.setting');
+    $custom_style  = preg_replace( '!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', theme_get_setting('customize_css') );
+    $custom_style = str_replace( array( "\r\n", "\r", "\n", "\t", '  ', '   ', '    ' ), '', $custom_style );
+    $variables['customize_css'] =  $custom_style;
+  }
+  $skin = 'default';
+  $skin = theme_get_setting('theme_skin');
+  if(isset($_GET['gvas']) && $_GET['gvas']){
+    $skin = $_GET['gvas'];
+  }
+  if(empty($skin)){
+    $skin = 'default';
+  }
+  
+  
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+      $type = $node->getType();
+      if ($type == 'enterprise' || $type == 'delegated_enterprise') {
+          $variables['#attached']['library'][] = 'gavias_emon/enterprise';
+          if (\Drupal::service('path.matcher')->isFrontPage())
+              $variables['#attached']['library'][] = 'gavias_emon/homepage';
+          if (theme_get_setting('enterprise') != '1' )
+              $variables['#attached']['library'][] = 'gavias_emon/mobile-optimized-patch';
+      }
+      else if ($type == 'ads')
+          $variables['#attached']['library'][] = 'gavias_emon/ads';
+      else
+          $variables['#attached']['library'][] = 'gavias_emon/mobile-optimized';
+  }
+  else
+      $variables['#attached']['library'][] = 'gavias_emon/mobile-optimized';
+
+
+  // NEED TO BE REMOVED AFTER PUBLIC LAUNCH
+  if (theme_get_setting('enterprise') == '1' && theme_get_setting('public_launch') != '1') {
+      $variables['#attached']['library'][] = 'gavias_emon/demo';
+  }
+
+
+  // Add information about the number of sidebars.
+  if (!empty($variables['page']['sidebar_first']) && !empty($variables['page']['sidebar_second'])) {
+    $variables['attributes']['class'][] = 'layout-two-sidebars';
+  }
+  elseif (!empty($variables['page']['sidebar_first'])) {
+    $variables['attributes']['class'][] = 'layout-one-sidebar';
+    $variables['attributes']['class'][] = 'layout-sidebar-first';
+  }
+  elseif (!empty($variables['page']['sidebar_second'])) {
+    $variables['attributes']['class'][] = 'layout-one-sidebar';
+    $variables['attributes']['class'][] = 'layout-sidebar-second';
+  }
+  else {
+    $variables['attributes']['class'][] = 'layout-no-sidebars';
+  }
+
+  if(theme_get_setting('site_layout') == 'boxed'){
+    $variables['attributes']['class'][] = 'boxed';
+  }
+  
+  if(theme_get_setting('preloader') == '1'){
+      $variables['attributes']['class'][] = 'js-preloader';
+   }else{
+      $variables['attributes']['class'][] = 'not-preloader';
+   } 
+   
+  $enterprise_style = theme_get_setting('enterprise');
+  if($enterprise_style == '1'){
+    $variables['attributes']['class'][] = 'enterprise';
+  } 
+/**
+  * Add compatible mode
+  */
+/*
+  2018.10.09 By Hsin, move this function to html.html.twig file. In order to make x-ua-compatible be first one meta tag.    
+  $xuacompatible = [
+    '#tag' => 'meta',
+    '#attributes' => [
+      'http-equiv' => 'X-UA-Compatible',
+      'content' => 'IE=edge,chrome=1',
+    ],
+  ];
+
+
+  $variables['page']['#attached']['html_head'][] = [$xuacompatible, 'x-ua-compatible'];
+*/   
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for page templates.
+ */
+function bartik_preprocess_page_title(&$variables) {
+  // Since the title and the shortcut link are both block level elements,
+  // positioning them next to each other is much simpler with a wrapper div.
+  if (!empty($variables['title_suffix']['add_or_remove_shortcut']) && $variables['title']) {
+    // Add a wrapper div using the title_prefix and title_suffix render
+    // elements.
+    $variables['title_prefix']['shortcut_wrapper'] = array(
+      '#markup' => '<div class="shortcut-wrapper clearfix">',
+      '#weight' => 100,
+    );
+    $variables['title_suffix']['shortcut_wrapper'] = array(
+      '#markup' => '</div>',
+      '#weight' => -99,
+    );
+    // Make sure the shortcut link is the first item in title_suffix.
+    $variables['title_suffix']['add_or_remove_shortcut']['#weight'] = -100;
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for maintenance-page.html.twig.
+ */
+function gavias_emon_preprocess_maintenance_page(&$variables) {
+  // By default, site_name is set to Drupal if no db connection is available
+  // or during site installation. Setting site_name to an empty string makes
+  // the site and update pages look cleaner.
+  // @see template_preprocess_maintenance_page
+  if (!$variables['db_is_active']) {
+    $variables['site_name'] = '';
+  }
+}
+
+
+
+/**
+ * Implements hook_preprocess_HOOK() for page templates.
+ */
+function gavias_emon_preprocess_page_title(&$variables) {
+  // Since the title and the shortcut link are both block level elements,
+  // positioning them next to each other is much simpler with a wrapper div.
+  if (!empty($variables['title_suffix']['add_or_remove_shortcut']) && $variables['title']) {
+    // Add a wrapper div using the title_prefix and title_suffix render
+    // elements.
+    $variables['title_prefix']['shortcut_wrapper'] = array(
+      '#markup' => '<div class="shortcut-wrapper clearfix">',
+      '#weight' => 100,
+    );
+    $variables['title_suffix']['shortcut_wrapper'] = array(
+      '#markup' => '</div>',
+      '#weight' => -99,
+    );
+    // Make sure the shortcut link is the first item in title_suffix.
+    $variables['title_suffix']['add_or_remove_shortcut']['#weight'] = -100;
+  }
+     
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter() for form templates.
+ */
+function gavias_emon_theme_suggestions_form_alter(array &$suggestions, array $variables) {
+    $suggestions[] = 'form__' . $variables['element']['#form_id'];  
+}
+
+function gavias_emon_form_contact_message_feedback_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+    unset($form['actions']['preview']);
+}
+
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function gavias_emon_theme_suggestions_paragraph_alter(&$suggestions, $variables) {
+  $paragraph = $variables['elements']['#paragraph'];
+/*
+  $parent = $paragraph->getParentEntity();
+  if ($parent) {
+    $suggestions[] = 'paragraph__' . $parent->bundle() . '__' .  $paragraph->bundle();
+  }
+*/
+
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+    $content_type = $node->bundle();
+    if ($content_type == 'delegated_enterprise')
+      $content_type = 'enterprise';
+
+    $suggestions[] = 'paragraph__' . $content_type . '__' .  $paragraph->bundle();
+  }
+}
+
+
+
+/**
+ * Implements hook_form_alter() to add classes to the search form.
+ */
+function gavias_emon_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  if (in_array($form_id, ['search_block_form', 'search_form'])) {
+    $key = ($form_id == 'search_block_form') ? 'actions' : 'basic';
+    if (!isset($form[$key]['submit']['#attributes'])) {
+      $form[$key]['submit']['#attributes'] = new Attribute();
+    }
+    $form[$key]['submit']['#attributes']->addClass('search-form__submit');
+  }
+}
+
+function gavias_emon_page_attachments_alter(array &$attachments) {
+  if (!isset($attachments['#attached']['html_head_link'])) {
+    return;
+  }
+  foreach ($attachments['#attached']['html_head_link'] as $key => $value) {
+    if (isset($value[0]['rel']) && $value[0]['rel'] == 'alternate') {
+      $newHref = str_replace('md8.supermicro.com', 'www.supermicro.com', $attachments['#attached']['html_head_link'][$key][0]['href']);
+      $attachments['#attached']['html_head_link'][$key][0]['href'] = $newHref;
+    }
+  }
+}
+function gavias_emon_theme_suggestions_views_view_alter(array &$suggestions, array $variables) {
+  return [
+    'views_view__' . $variables['view']->id()
+  ];
+}

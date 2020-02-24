@@ -1,0 +1,14 @@
+{#
+{% if fields.field_product_type.content|trim is empty%}
+    <span id="{{ fields.title.content|render|striptags|trim }}">{{ fields.title.content }}</span>
+{% else %}    
+    <li id="{{ fields.title.content|render|striptags|trim }}" {% if fields.path.content|trim in path('<current>') and fields.field_product_type.content|trim is not empty%}class="active"{% endif %} ><a href="{{ fields.path.content }}">{{ fields.title.content|striptags }}</a></li>
+{% endif %}  
+#}
+
+
+<li {% if fields.path.content|trim in path('<current>') %}class="active"{% endif %}>
+	<a href="{{ fields.path.content }}">
+		{{ fields.title.content }}
+	</a>
+</li>

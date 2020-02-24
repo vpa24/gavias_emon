@@ -1,0 +1,19 @@
+<div class="text-center clearfix">
+    <nav class="portfolio-filter1" style="width:100%;margin-bottom:10px;">
+        <div class="filter" style="cursor:pointer">
+           <i class="fa fa-filter"></i> <span class="filterall">Filter Products</span>
+           <div class="icaret nav-plus fa fa-angle-down" ></div>
+         </div>		 
+    </nav>     
+    <nav class="portfolio-filter filtertab">
+      <ul class="nav nav-tabs">
+      	<li><a href="#" data-filter="*"><span>All</span></a></li>
+        {% for row in rows %}
+            {% set tid = row.content['#view'].style_plugin.render_tokens[ loop.index0 ]['{{ tid }}']|trim %}
+            {% if tid in pf %}                
+                {{ row.content }}
+            {% endif %}
+         {% endfor %}
+      </ul> 
+    </nav> 
+</div> 

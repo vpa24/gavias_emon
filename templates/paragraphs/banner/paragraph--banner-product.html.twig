@@ -1,0 +1,28 @@
+<div class="landing1-banner-product">
+    {% if content.field_product_link['#items'][0].getString() is not empty %}
+        <a class="image-opacity-effect" href="{{ link }}">
+    {% endif %}                          
+    {% if file_url(paragraph.field_image.entity.fileuri) != '/' %}
+      <img src="{{ file_url(paragraph.field_image.entity.fileuri) }}" alt="{{ paragraph.field_image.alt }}"
+        {% if content.field_image_map_name['#items'][0].getString() is not empty %}
+          usemap="#{{ content.field_image_map_name['#items'][0].getString() }}" 
+        {% endif %}
+      />
+    {% endif %}
+    {% if content.field_product_link['#items'][0].getString() is not empty %}
+        </a>
+    {% endif %}                                                  
+
+    <div class="landing1-banner-product-title">
+      {% if content.field_label is not empty %}
+          {{ content.field_label }}
+      {% endif %}    
+    </div>
+</div>
+{% if content.field_image_map['#object'] is not empty %}
+    <map name="{{ content.field_image_map_name['#items'][0].getString() }}">
+        {{ content.field_image_map|render }}
+    </map>
+{% endif %}
+
+

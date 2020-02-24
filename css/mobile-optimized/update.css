@@ -1,0 +1,89 @@
+/****/
+.swiper-wrapper {
+  background: #ccc;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+.swiper-wrapper:before {
+  content: "";
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  background: url(../images/preloader/preloader-10.gif) no-repeat rgba(255, 255, 255, 0.3);
+  text-align: center;
+  margin-top: -30px;
+  margin-left: -30px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1000;
+}
+.swiper-wrapper.slick-initialized {
+  max-height: 999px !important;
+  background: none;
+}
+.swiper-wrapper.slick-initialized:before {
+  display: none !important;
+}
+
+
+#backtotop {
+  z-index: 1000;
+}
+
+
+
+
+
+
+/* --------------------------------- */
+/* enterprise styles  */
+/* --------------------------------- */
+/*
+.nav-tabs > li.active > a, 
+.nav-tabs > li > a.active, 
+.nav-tabs > li > a:hover, .nav-tabs > li > a:focus, .nav-tabs > li > a:active {
+    color: #961919;
+    border-left-color: #961919;
+    border-right-color: #961919;
+}
+
+
+.highlight-row {
+    border: 5px solid #003A70 !important;
+}
+
+
+.search-form .input-group-btn .btn, 
+.search-form .input-group-btn .btn:hover, 
+.search-form .input-group-btn .btn:focus, 
+.search-form .input-group-btn.btn:active {
+  font-size: 12px !important;
+  padding: 6px 12px;
+  margin-left: 0px;
+}
+
+*/
+
+.main.main-page {
+    position: relative;
+}
+
+.main.main-page .page-overlay {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.6;
+    background-color: black;
+    position: absolute;
+    transition: all 0.2s ease-in-out;    
+    z-index: 10;
+}
+
+

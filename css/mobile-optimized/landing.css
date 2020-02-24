@@ -1,0 +1,51 @@
+.widget.gsc-heading.align-left .title-desc {
+	line-height: 1.6;
+}
+
+.widget.gsc-heading .title-desc,
+.paragraph--type--html .title-desc {
+	font-size: 1.6rem;
+	color: rgb(51, 51, 51);
+}
+
+
+.landing1 .title-desc p,
+.paragraph--type--html .title-desc p {
+	padding-bottom: 1.5em;
+}
+
+.landing1 .title-desc ul {
+	padding-left: 2em;
+}
+
+.landing1 .title-desc ul li {
+	list-style: disc;
+}
+
+.landing1 .title-desc table {
+	font-size: 1.4rem;
+}
+
+.landing1 .title-desc table ul {
+	padding-left: 0;
+}
+
+.landing1 .title-desc table ul li {
+	list-style: none;
+	padding: 1em 0;
+}
+
+.landing1 .title-desc table a {
+	text-decoration: underline;
+	padding: 1em 0;
+}
+
+.landing1 .title-desc thead th {
+	background-color: hsl(0, 0%, 96%);
+}
+
+@media screen and (min-width: 45em) {
+    .landing1 .title-desc thead th {
+        white-space: nowrap;
+    }
+}

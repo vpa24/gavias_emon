@@ -1,0 +1,69 @@
+<style>
+@media (max-width: 990px) {
+  .selected-product-family .icaret {
+    top: 15px; 
+  }
+}
+</style>
+<div class="panel with-nav-tabs panel-default"  style="border:none;">
+    <div class="panel-body">
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="tab1default">
+
+
+            <div class="selected-product-family product-family-tab">
+              <div class="tabs tabs-style-underline">
+                <nav>
+                  <ul>
+                    <li class="active" id="expand-product-family">
+                      <a href="#" >
+                        {% set productFamilySelected = false %}
+                        {% for row in rows %}                       
+                          {% if row.content['#view'].style_plugin.render_tokens[ loop.index0 ]['{{ path }}']|trim in path('<current>') %}
+                              {% if row.content['#view'].style_plugin.render_tokens[ loop.index0 ]['{{ path }}']|trim|lower ends with 'sp3' %}EPYC™ 7000 Series
+                              {% elseif row.content['#view'].style_plugin.render_tokens[ loop.index0 ]['{{ path }}']|trim|lower ends with 'epyc3000-embedded' %}EPYC™ 3000 Series
+                              {% elseif row.content['#view'].style_plugin.render_tokens[ loop.index0 ]['{{ path }}']|trim|lower ends with 'g34' %}Opteron™ 6000 Series
+                              {% elseif row.content['#view'].style_plugin.render_tokens[ loop.index0 ]['{{ path }}']|trim|lower ends with 'c32' %}Opteron™ 4000 Series
+                              {% elseif row.content['#view'].style_plugin.render_tokens[ loop.index0 ]['{{ path }}']|trim|lower ends with 'am3plus' %}Opteron™ 3000 Series
+                              {% else %}
+                                {{ row.content['#view'].style_plugin.render_tokens[ loop.index0 ]['{{ title }}'] }}
+                              {% endif %}
+                            {% set productFamilySelected = true %}
+                          {% endif %}  
+                        {% endfor %}
+
+                        {% if productFamilySelected == false %}
+                          7000 Series
+                        {% endif %}  
+                      </a>
+                      <span class="icaret nav-plus fa fa-angle-down"></span>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+
+
+
+      				<div class="product-family-tab mobile-style-tab">
+      				    <div class="tabs tabs-style-underline">
+      				      <nav>
+      				        <ul>
+      					      {% for row in rows %}
+      						      {{ row.content }}
+      					      {% endfor %}
+      				        </ul>
+      				      </nav>
+      				    </div>
+      				</div>            	
+
+            </div>
+            <div class="tab-pane fade" id="tab2default"></div>
+            <div class="tab-pane fade" id="tab3default"></div>
+        </div>
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,30 @@
+<div class="row {% if content.field_classes['#items'][0].getString() is not empty %}{{ content.field_classes['#items'][0].getString() }}{% endif %}">
+    <div class="gsc-column col-lg-5 col-md-5 col-sm-12 col-xs-12">       
+        {% if content.field_image_file.0 is not empty %}
+            <a href="{{ content.field_smart_link.0 }}" target="smci">
+                <img src="{{ content.field_image_file.0 }}" style="width:100%">
+            </a>
+        {% elseif paragraph.field_image.entity.fileuri|render is not empty %}
+            <a href="{{ content.field_smart_link.0 }}" target="smci">
+                <img src="{{ file_url(paragraph.field_image.entity.fileuri) }}" style="width:100%">
+            </a>
+        {% endif %}    
+    </div>
+
+    <div class="gsc-column col-lg-7 col-md-7 col-sm-12 col-xs-12">
+        <div class="widget gsc-heading content ">
+            <div class="content-inner ">
+                {% if content.field_collateral_types['#items'][0].getString() is not empty %}
+                    <div class="collateral-type-icon {{ content.field_collateral_types['#items'][0].getString()|lower|replace({' ': '-'}) }}"></div>
+                {% endif %}
+                <h2>{{ content.field_title }}</h2>
+                <div class="desc">{{ content.field_body }}</div>
+                {% if content.field_smart_link.0['#paragraph'].field_link.0 is not empty %}
+                    <a href="{{ content.field_smart_link.0 }}" target="smci" class="smaller semibold">     
+                        <div class="readmore">{% if content.field_link_title.0 is empty %}Learn more{% else %}{{ content.field_link_title.0 }}{% endif %} <i class="fa fa-angle-right"></i></div>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

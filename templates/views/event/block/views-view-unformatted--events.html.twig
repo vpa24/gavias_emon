@@ -1,0 +1,14 @@
+{% set slidesToShow = (rows|length < 4) ? rows|length : 4 %}
+
+<div class="bb-container  carousel" >
+    <div class="gavias-slider" data-dots="true" data-responsive="true" data-indicator=''>
+        <div class="loading"><i class="fa fa-spinner fa-pulse fa-4x fa-fw"></i></div>
+        <div class="swiper-wrapper" data-slick='{"slidesToShow": {{ slidesToShow }}, "slidesToScroll": {{ slidesToShow }} }'>
+      		{% for row in rows %}
+      			<div class="slide">
+      				{{ row.content }}
+      			</div>
+     		{% endfor %}
+     	</div>
+     </div>
+</div>     

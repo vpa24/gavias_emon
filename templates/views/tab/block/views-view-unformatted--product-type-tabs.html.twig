@@ -1,0 +1,34 @@
+<div class="selected-product-type">
+	<div class="panel with-nav-tabs panel-default"  style="border:none;">
+      <div class="panel-heading" style="border:none;">
+          <ul class="nav nav-tabs">                
+            <li >
+                {% for row in rows %}			                	
+                	{% if row.content['#view'].style_plugin.render_tokens[ loop.index0 ]['{{ path }}']|trim in path('<current>') 
+                	   and row.content['#view'].style_plugin.render_tokens[ loop.index0 ]['{{ field_product_type }}']|trim is not empty%}
+                        {{ row.content['#view'].style_plugin.render_tokens[ loop.index0 ]['{{ title }}'] }}
+                    {% endif %}  
+                {% endfor %}
+              <span class="icaret nav-plus fa fa-angle-down"></span>
+            </li>
+          </ul>
+        </div>
+    </div>      
+</div>
+
+  
+<div class="product-type-tab">
+	<div class="panel with-nav-tabs panel-default"  style="border:none;">
+	    <div class="panel-heading" style="border:none;">
+	            <ul class="nav nav-tabs">                
+	                {% for row in rows %}
+	                        {{ row.content }}
+	                {% endfor %}
+	            </ul>
+	    </div>
+	</div>      
+</div>
+
+
+
+

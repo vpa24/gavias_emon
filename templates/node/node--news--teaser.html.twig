@@ -1,0 +1,40 @@
+{{ attach_library('gavias_emon/press_release') }}
+{%
+  set classes = [
+    'node',
+    'node-detail',
+    'node--type-' ~ node.bundle|clean_class,
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+    'clearfix',
+    'news-search-result',     
+  ]
+%}
+
+<article{{ attributes.addClass(classes) }} >
+  <div class="post-block" >
+    <div class="post-meta" >
+      <span class="post-created">{{ content.field_type[0]['#markup']|upper }}</span>
+    </div>      
+    <div class="post-content hover-shadow" >
+        <div class="row">
+            <div class="col-xs-12">
+
+              <h3{{ title_attributes.addClass('post-title') }}>
+                    <a href="{{ content.field_external_link.0 }}" target="smci">{{ label }}</a>
+                    <div class="post-meta" style="margin:0">By {{ content.field_author.0 }} - {{ content.field_date.0 }}</div>
+              </h3>
+
+              <div class="post-description">
+                {{ content.body }}
+              </div>
+
+              <a href="{{ content.field_external_link.0 }}" target="smci" class="smaller semibold" >
+                <div class="readmore">More <i class="fa fa-angle-right"></i></div>
+              </a>
+
+            </div>
+        </div>
+    </div>
+
+  </div>
+</article>  

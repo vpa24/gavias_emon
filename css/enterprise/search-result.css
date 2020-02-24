@@ -1,0 +1,134 @@
+.search-result .loading {
+    text-align: center;
+}
+
+.search-result .search-result-none {
+    text-align: center;
+    color: #97999B;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 21px;
+}
+
+.search-result .search-result-none span {
+    font-weight: bold;
+}
+
+.search-result .search-result-item {
+    margin-bottom: 30px;
+}
+
+.search-result .search-result-item .search-result-link {
+    color: #ccc;
+    word-break: break-all;
+}
+
+.search-result .search-result-item .search-result-content {
+    font-size: 16px;
+    color: #222;
+}
+
+.search-result .search-result-item .search-result-content em {
+    color: #009639;
+    font-weight: bold;
+}
+
+.search-result .search-result-item .search-result-title {
+    margin: 0;
+    font-size: 21px;
+}
+
+.search-result .search-result-header {
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+.search-result .search-box {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.search-result .search-box input {
+    border: none;
+    height: 100%;
+    width: 100%;
+    padding: 0.5em 4.5em 0.5em 1em;
+    box-shadow: none;
+    border: 1px solid #ccc;
+}
+
+.search-result .search-box button {
+    background-color: #f1f1f1;
+    border: none;
+    width: 3.5em;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    transition: 0.3s all ease;
+    border: 1px solid #ccc;
+}
+
+.search-result .search-box button:hover {
+    background-color: #97999B;
+}
+
+.search-result .search-box button svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 60%;
+}
+
+.search-result .result-list {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: none;
+}
+
+.search-result .result-paging {
+    color: #97999B;
+    display: none;
+}
+
+.search-result .result-paging.result-paging-header {
+    text-align: left;
+    font-size: 19px;
+}
+
+.search-result .result-paging.result-paging-header .result-keyword {
+    font-weight: bold;
+}
+
+.search-result .result-paging.result-paging-footer {
+    text-align: center;
+}
+
+.search-result .result-paging.result-paging-footer .page-arrow {
+    font-size: 35px;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    margin: 0;
+    vertical-align: middle;
+    background-color: #fff;
+    border: none;
+    outline: none;
+}
+
+.search-result .result-paging.result-paging-footer .page-arrow:disabled {
+    color: #f1f1f1;
+}
+
+.search-result .result-paging.result-paging-footer .page-arrow .fa {
+    line-height: 1;
+}
+
+.search-result .result-paging.result-paging-footer span {
+    display: inline-block;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+}

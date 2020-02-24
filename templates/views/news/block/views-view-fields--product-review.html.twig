@@ -1,0 +1,37 @@
+{{ attach_library('gavias_emon/press_release') }}
+<div class="product-review hover-shadow">
+
+    <table>
+        <tr>
+            <td class="logo">
+                {% if fields.field_source.content is not empty %}
+                  <img src="/sites/default/files/logos/news/{{ fields.field_source.content }}.png">
+                {% else %}
+                  <img src="{{ fields.field_image.content }}">
+                {% endif %}      
+            </td>
+            <td class="content">
+                <h3 style="margin-bottom: 5px; line-height: 1.2"><a href="{{ fields.field_external_link.content }}" target="news">{{ fields.title.content }}</a></h3>
+                <div style="    font-size: 12px;    font-weight: 600;">
+                  <div class="news-author">By {{ fields.field_author.content }} - {{ fields.field_date.content }}</div>
+                </div>
+
+            </td>
+        </tr>
+
+        <tr>
+            <td class="news-thumbnail">
+              <img src="{{ fields.field_thumbnail.content }}">
+            </td>
+            <td class="content">
+                <div class="team-info">
+                  {{ fields.body.content }}
+                </div>
+                <a href="{{ fields.field_external_link.content }}" target="news" class="smaller semibold" tabindex="0">     
+                  <div class="readmore">Read this review <i class="fa fa-angle-right"></i></div>
+                </a>
+            </td>
+        </tr>
+    </table>
+
+</div>

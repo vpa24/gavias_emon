@@ -1,0 +1,21 @@
+<div class="widget gsc-box-info  content-align-{{content.field_content_align['#items'][0].getString()}}" style="min-height: 260px">
+    <div class="clearfix">
+        <div class="image"
+            {% if paragraph.field_image.entity.fileuri|render is not empty %}
+                style="background-image: url('{{ file_url(paragraph.field_image.entity.fileuri) }}'); background-size: cover"
+            {% endif %} >
+        </div>
+
+        <div class="content text-dark">
+            <div class="content-bg"></div>
+            <div class="content-inner">
+                <div class="subtitle"><span></span></div>
+                <div class="title"><h2>{{ content.field_title }}</h2></div>
+                <div class="desc">{{ content.field_body }}</div>
+                {% if content.field_smart_link.0['#paragraph'].field_link.0 is not empty %}
+                    <div class="readmore"><a class="btn-theme btn btn-sm" href="{{ content.field_smart_link.0 }}">{% if content.field_link_title.0 is empty %}Learn more{% else %}{{ content.field_link_title.0 }}{% endif %}</a></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

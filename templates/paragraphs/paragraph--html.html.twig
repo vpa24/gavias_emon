@@ -1,0 +1,32 @@
+{%
+  set classes = [
+    'paragraph',
+    'paragraph--type--' ~ paragraph.bundle|clean_class,
+    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+    content.field_layout['#items'][0].getString() == 'Full Width' ? 'full-width'    
+  ]
+%}
+{% if content.field_classes['#items'][0].getString() is not empty %}
+    {% set classes = classes|merge(content.field_classes['#items'][0].getString()|split(' ')) %}
+{% endif %}
+ 
+{% block paragraph %}
+<div{{ attributes.addClass(classes) }} 
+    {% if content.field_css['#items'][0].getString() is not empty %}style="{{ content.field_css['#items'][0].getString() }}"{% endif %}
+    {% if content.field_id['#items'][0].getString() is not empty %}id="{{ content.field_id['#items'][0].getString() }}"{% endif %}
+>
+
+
+    {% if content.field_title.0 is not empty %}
+        <div class="box-title" >{{ content.field_title.0 }}</div>
+    {% endif %}
+    {% if content.field_subtitle_html.0 is not empty %}
+        <div class="box-subtitle" >{{ content.field_subtitle_html.0 }}</div>
+    {% endif %}
+
+    <div>
+      {{ content.field_body }}
+    </div>
+
+</div>
+{% endblock paragraph %}

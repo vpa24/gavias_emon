@@ -1,0 +1,5 @@
+<li id="{{ fields.title.content|render|striptags|trim }}" {% if fields.path.content|trim in path('<current>') %}class="active"{% endif %} >
+	<a href="{{ fields.path.content }}">{{ fields.title.content|striptags }}</a>
+</li>
+
+

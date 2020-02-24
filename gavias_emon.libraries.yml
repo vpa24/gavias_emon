@@ -1,0 +1,202 @@
+global-styling:
+  version: VERSION
+  header: false
+  css:
+    theme:    
+      css/font-awesome.css: {}
+      css/fonts.css: {}
+      css/template.css: {}
+      css/bootstrap.css: {}
+      css/global.css: {}      
+      css/blogs.css: {}
+  js:
+    js/bootstrap.js: {}
+    vendor/jquery.easing.js: {}    
+    vendor/waypoint.js: {}
+    js/js.cookie.js: {}
+    js/global.js: {}    
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+    - gavias_slider/gavias_slider.assets.frontend
+    - quicktabs/quicktabs
+    - core/drupal.autocomplete
+
+
+gavias-monte-admin:
+  version: VERSION
+  css: 
+    theme: 
+      css/theme-settings.css: {}
+
+maintenance_page:
+  version: VERSION
+  css:
+    theme:
+      css/maintenance-page.css: {}
+
+
+mobile-optimized:
+  css:
+    theme: 
+      vendor/owl-carousel/assets/owl.carousel.min.css: {}
+      vendor/owl-carousel/assets/owl.theme.default.min.css: {}
+      css/mobile-optimized/customize.css: {}
+      css/mobile-optimized/custom.css: {}
+      css/mobile-optimized/update.css: {}
+      css/mobile-optimized/landing.css: {}
+      css/animate.css: {}
+      css/enterprise/breadcrumbs.css: {}            
+      css/enterprise/footer.css: {}
+      css/enterprise/subnav.css: {}
+      css/enterprise/contact.css: {}                
+  js:
+    js/imagesloader.min.js: {}
+    vendor/jquery.appear.js: {}
+    vendor/count-to.js: {}
+    vendor/jpreloader.min.js: {}
+    vendor/isotope.pkgd.min.js: {}
+    js/jquery.rwdImageMaps.min.js: {}
+    js/parallax.min.js: {}    
+    vendor/masonry.pkgd.min.js: {}    
+    vendor/owl-carousel/owl.carousel.min.js: {}
+    js/mobile-optimized/theme.plugins.js: {}
+    js/cookie-consent.js: {}
+    js/enterprise/contact.js: {}
+  
+  dependencies:
+    - core/drupal.dialog.off_canvas  
+  
+
+mobile-optimized-patch:
+  css:
+    theme: 
+      css/mobile-optimized/megamenu-patch.css: {}
+
+
+ads:
+  css:
+    theme: 
+      css/mobile-optimized/customize.css: {}
+      css/mobile-optimized/custom.css: {}
+      css/mobile-optimized/update.css: {}
+      css/mobile-optimized/landing.css: {}
+      css/animate.css: {}
+      css/fonts-PTSansNarrow.css: {}
+      css/ads.css: {}      
+  js:
+    js/imagesloader.min.js: {}
+    vendor/jquery.appear.js: {}
+    vendor/count-to.js: {}
+    vendor/jpreloader.min.js: {}
+    vendor/isotope.pkgd.min.js: {}
+    js/jquery.rwdImageMaps.min.js: {}
+    js/parallax.min.js: {}    
+    vendor/masonry.pkgd.min.js: {}    
+    vendor/owl-carousel/owl.carousel.min.js: {}
+    js/mobile-optimized/theme.plugins.js: {}
+
+
+enterprise:
+  css:
+    theme: 
+      css/bootstrap-xxs.css: {}            
+      css/enterprise/enterprise.css: {}
+      css/enterprise/breadcrumbs.css: {}            
+      css/enterprise/footer.css: {}
+      css/enterprise/subnav.css: {}
+      css/enterprise/overview.css: {}
+      css/enterprise/product-lines.css: {}
+      css/enterprise/portfolio.css: {}  
+      css/enterprise/social-media.css: {}
+      css/enterprise/hub-page.css: {}
+      css/enterprise/contact.css: {}
+      css/enterprise/search-result.css: {}  
+      css/print.css: { media: print }               
+  js:
+    js/enterprise/enterprise.js: {}
+    js/cookie-consent.js: {}
+    js/enterprise/overview.js: {}
+    js/enterprise/social-media.js: {}
+    js/enterprise/contact.js: {}
+    js/enterprise/product-compare.js: {}
+    js/enterprise/search-result.js: {}
+    vendor/sticky.min.js: {}    
+  dependencies:
+    - core/drupal.dialog.off_canvas
+    - video_embed_field/colorbox
+
+product-selector:
+  css:
+    theme: 
+      css/enterprise/product-selector.css: {}
+  js:
+    js/enterprise/product-selector.js: {}
+  dependencies:
+    - gavias_emon/enterprise
+
+
+
+press_release:
+  css:
+    theme: 
+      css/enterprise/press-release.css: {}
+  dependencies:
+    - gavias_emon/enterprise
+
+
+webinar:
+  css:
+    theme: 
+      css/enterprise/webinar.css: {}
+  js:
+    js/enterprise/webinar.js: {}
+
+
+horizontal-scrolling:
+  css:
+    theme: 
+      css/enterprise/horizontal-scrolling.css: {}
+  js:
+    js/enterprise/horizontal-scrolling.js: {}
+
+timeline:
+  css:
+    theme: 
+      css/enterprise/timeline.css: {}
+  js:
+    js/enterprise/timeline.js: {}
+
+
+enterprise-megamenu:
+  css:
+    theme: 
+      css/enterprise/megamenu.css: {}
+  js:
+    js/enterprise/megamenu.js: {}
+
+
+mobile-optimized-megamenu:
+  css:
+    theme: 
+      css/mobile-optimized/megamenu.css: {}
+  js:
+    js/mobile-optimized/megamenu.js: {}
+
+
+homepage:
+  css:
+    theme: 
+      css/fonts-PTSansNarrow.css: {}
+      css/enterprise/homepage.css: {}
+  js:
+    js/enterprise/homepage.js: {}
+
+
+demo:
+  css:
+    theme: 
+      css/demo.css: {}
+  js:
+    js/demo.js: {}

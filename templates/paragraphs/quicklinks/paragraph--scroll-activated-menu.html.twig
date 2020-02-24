@@ -1,0 +1,26 @@
+{% if content.field_id['#items'][0].getString() is not empty %} 
+<div id="{{ content.field_id['#items'][0].getString() }}">
+{% endif %}
+
+
+<div class="full-width subnav" id="{% if content.field_sticky_flag['#items'][0].getString() == '1' %}sticky-subnav{% else %}subnav{% endif %}" {{ paragraph.id.value}} >
+    <div class="container">
+      <ul class="nav nav-tabs">
+        {% for key, item in content.field_menu_item if key|first != '#' %}
+            {{ content.field_menu_item[loop.index0] }}
+        {% endfor %}
+      </ul>
+    </div>
+    {% if content.field_sub_menu_item['#items'][0].getString() is not empty %}
+        <ul class="nav nav-sub-tabs">
+          {% for key, item in content.field_sub_menu_item if key|first != '#' %}
+              {{ content.field_sub_menu_item[loop.index0] }}
+          {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+
+
+{% if content.field_id['#items'][0].getString() is not empty %} 
+</div>
+{% endif %}

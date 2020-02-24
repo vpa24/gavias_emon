@@ -1,0 +1,5 @@
+<li id="{{ fields.field_product_family.content }}" {% if fields.path.content|trim in path('<current>') %}class="active"{% endif %}>
+	<a href="{{ fields.path.content }}">
+		{{ fields.field_product_family.content }}
+	</a>
+</li>

@@ -1,0 +1,59 @@
+<style>
+@media (max-width: 990px) {
+  .selected-product-type .nav-tabs>li { 
+    padding-bottom: 5px;
+  }
+  .selected-product-type .icaret {
+    top: 5px; 
+  }
+}
+@media (max-width: 768px) {
+  .nav-tabs>li {
+    margin-right: 5px;
+  }
+  .nav-tabs>li a {
+    padding: 8px 10px !important;
+  }
+}
+@media (max-width: 480px) {
+  .nav-tabs>li a {
+    font-size: 12px !important;
+  }
+}
+</style>
+
+<div class="selected-product-type">
+	<div class="panel with-nav-tabs panel-default"  style="border:none;">
+      <div class="panel-heading" style="border:none;">
+          <ul class="nav nav-tabs">                
+            <li >
+                {% for row in rows %}			                	
+                	{% if row.content['#view'].style_plugin.render_tokens[ loop.index0 ]['{{ path }}']|trim in path('<current>') 
+                  or (path('<current>') ends with 'solutions' and row.content['#view'].style_plugin.render_tokens[ loop.index0 ]['{{ path }}']|trim|lower ends with 'sp3') %}
+                        {{ row.content['#view'].style_plugin.render_tokens[ loop.index0 ]['{{ title }}'] }}
+                    {% endif %}  
+                {% endfor %}
+              <span class="icaret nav-plus fa fa-angle-down"></span>
+            </li>
+          </ul>
+        </div>
+    </div>      
+</div>
+
+  
+<div class="product-type-tab">
+	<div class="panel with-nav-tabs panel-default"  style="border:none;">
+	    <div class="panel-heading" style="border:none;">
+	            <ul class="nav nav-tabs">                
+	                {% for row in rows %}
+	                        {{ row.content }}
+	                {% endfor %}
+                  <li><a href="/Aplus/support/faqs/index.cfm{{langlink}}">A+ Online Support</a></li>            
+	            </ul>
+	    </div>
+	</div>      
+</div>
+
+
+
+

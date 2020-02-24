@@ -1,0 +1,29 @@
+<article class="portfolio-v1 col-lg-30 col-md-3 col-sm-6 col-xs-12 isotope-item no-padding {{ fields.tid.content|lower|striptags|trim }} {{ fields.tid_1.content|lower|striptags|trim }} {{ fields.tid_2.content|lower|striptags|trim }}  {{ fields.field_portfolio_tags.content }} {{ fields.field_product_generations.content }} {{ fields.tid_3.content|lower|striptags|trim }} {{ fields.tid_4.content|lower|striptags|trim }} {{ fields.tid_5.content|lower|striptags|trim }} grid" product>
+   <div class="product-view">
+      <div class="row image">
+         <div class="col-md-12 col-sm-12 col-xs-12 scale-on-hover text-center" >
+          {% if fields.field_image.content|raw is not empty %}
+              {{ fields.field_image.content }}
+          {% else %}
+              <img src="/a_images/Photos_Coming_Soon.jpg">
+          {% endif %}
+         </div>
+      </div>
+      <div>
+         <div class="product-sku" sku>{{ fields.title.content }}</div>
+         <div class="image-caption">
+              {% if fields.field_new_flag.content == '1' and (fields.field_new_flag_exp_date.content is empty  or "now"|date('Y-m-d') <= fields.field_new_flag_exp_date.content) %}
+                <span class="new-flag"></span>&nbsp;
+              {% endif %}
+              {% set string = fields.field_image_caption.content|striptags %}
+              {% set string = string|replace({'&quot;': '"'}) %}
+              {% set string = string|replace({'&amp;': '&'}) %}
+              {% set string = string|replace({'\n': ' • '}) %}
+              {{ string }}
+         </div>
+         <div class="key-features marked-list-green">
+            {{ fields.field_key_features.content }}
+         </div>
+      </div>
+   </div>
+</article>

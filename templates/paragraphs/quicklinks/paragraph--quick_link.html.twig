@@ -1,0 +1,5 @@
+<li {% if content.field_classes['#items'][0].getString() is not empty %}class="{{ content.field_classes['#items'][0].getString() }}"{% endif %}>
+  <a href="{{ link }}" {% if link starts with '#' %}smooth{% endif %} {% if content.field_target['#items'][0].getString() is not empty %}target="{{ content.field_target['#items'][0].getString() }}"{% endif %} >
+    {{ content.field_title.0 }}
+  </a>
+</li>

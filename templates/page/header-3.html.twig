@@ -1,0 +1,110 @@
+<!-- MRP Web Tracker for Supermicro -->
+<img src="https://j.mrpdata.net/u.gif?g=BPCCDz9c7gacT17AFqJ2yl1ajU4nhngazBtZozT0dAo=&pd=eyJ3ZWJ0cmFja2VyIjoiMi4wIn3e4bPXaJOLfs6WjnYOMJNA" width="1" height="1" alt="" style="display:none;">
+<header id="header" class="header-v3 enterprise">
+  
+  <div id="menubar">
+
+    
+  {% if page.topbar %}
+    <!--
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div class="container">
+          <div class="content">{{ page.topbar }}</div> 
+        </div>
+      </div>
+    </div>
+  -->
+  {% endif %}
+
+  {% if page.header_right %}
+    <div class="header-right">
+      <div class="container">
+            <div class="header-right-inner">
+              {{ page.header_right }}
+            </div>
+      </div>
+  </div>
+  {% endif %}
+
+  {% set class_sticky = '' %}
+  {% if sticky_menu == 1 %}
+    {% set class_sticky = 'gv-sticky-menu' %}
+  {% endif %}  
+
+   <div class="header-main {{ class_sticky }} {% if is_front %}front-page{% endif %}">
+      <div class="{% if enterprise_style == 1 %}bb-container{% else %}container{% endif %}">
+         <div class="header-main-inner p-relative">
+            <div class="row">
+              <div class="col-md-2 col-xs-6 branding">
+                {% if page.branding %}
+                  {{ page.branding }}
+                {% endif %}
+              </div>
+
+              <div class="col-md-10 col-xs-6 p-static">
+                <div class="main-menu">
+                   <div class="navigation area-main-menu">
+                      <div class="area-inner">
+                        {% if page.main_menu %}
+                          {{ page.main_menu }}
+                        {% endif %}  
+                         {% if page.search %}
+                            <div class="gva-search-region search-region">
+                              {% if enterprise_style == 1 %}
+                                 <span class="icon">
+                                    <div class="search">
+                                      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                         viewBox="0 0 27.8 29.8" style="enable-background:new 0 0 27.8 29.8;" xml:space="preserve">
+                                      <g>
+                                        <g>
+                                          <g>
+                                            <path class="st0" d="M27.5,28l-1-1c-0.2,0.3-0.5,0.6-0.7,0.8c-0.2,0.2-0.5,0.4-0.7,0.6l1,1c0.2,0.2,0.5,0.3,0.7,0.3
+                                              c0.3,0,0.5-0.1,0.7-0.3C27.8,29.1,27.8,28.4,27.5,28z"/>
+                                          </g>
+                                        </g>
+                                        <g>
+                                          <g>
+                                            <path class="st0" d="M18.9,19.5c2.2-2.1,3.6-5,3.6-8.2c0-6.2-5-11.3-11.3-11.3C5,0,0,5.1,0,11.3s5,11.3,11.3,11.3
+                                              c2.2,0,4.3-0.6,6.1-1.8l7,7c0.2-0.2,0.5-0.4,0.7-0.6c0.3-0.3,0.5-0.6,0.7-0.8L18.9,19.5z M11.3,21c-5.4,0-9.8-4.4-9.8-9.8
+                                              s4.4-9.8,9.8-9.8c5.4,0,9.8,4.4,9.8,9.8S16.6,21,11.3,21z"/>
+                                          </g>
+                                        </g>
+                                      </g>
+                                      </svg>
+                                    </div>
+                                    <img class="fa-close" src="/sites/default/files/icons/close.svg" width="22px" style="display:none">
+                                  </span>
+                              {% else %}
+                                 <span class="icon"><i class="fa fa-search"></i></span>
+                                 <div class="search-content">  
+                                     {{ page.search }}
+                                 </div>  
+                              {% endif %}
+                            </div>
+                         {% endif %}
+                      </div>
+                   </div>
+                   {% if enterprise_style == 1 and page.search %}                   
+                      <div class="search-content">  
+                        {{ page.search }}
+                      </div>
+                   {% endif %}  
+                </div> 
+              </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+ </div>
+
+  {% if page.topbar %}
+  <div class="breaking-news">
+    <div class="content-inner">
+      {{ page.topbar }}
+    </div>
+  </div>
+  {% endif %}
+  
+</header>

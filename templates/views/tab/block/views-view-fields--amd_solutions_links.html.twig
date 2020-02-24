@@ -1,0 +1,13 @@
+<li id="{{ fields.field_product_family.content }}" {% if fields.path.content|trim in path('<current>') or (path('<current>') ends with 'solutions' and (fields.path.content|trim|lower ends with 'sp3')) %}class="active"{% endif %}>
+	<a href="{{ fields.path.content }}">
+		{% if fields.path.content|trim|lower ends with 'sp3' %}EPYC™ 7000 Series
+		{% elseif fields.path.content|trim|lower ends with 'epyc3000-embedded' %}EPYC™ 3000 Series
+		{% elseif fields.path.content|trim|lower ends with 'g34' %}Opteron™ 6000 Series
+		{% elseif fields.path.content|trim|lower ends with 'c32' %}Opteron™ 4000 Series
+		{% elseif fields.path.content|trim|lower ends with 'am3plus' %}Opteron™ 3000 Series
+		{% else %}
+			{{ fields.title.content }}
+		{% endif %}
+		
+	</a>
+</li>

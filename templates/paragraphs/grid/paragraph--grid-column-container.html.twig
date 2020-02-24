@@ -1,0 +1,39 @@
+{%
+  set classes = [
+    'paragraph--type--' ~ paragraph.bundle|clean_class,
+    'full-width'
+  ]
+%}
+{% if content.field_classes['#items'][0].getString() is not empty %}
+    {% set classes = classes|merge(content.field_classes['#items'][0].getString()|split(' ')) %}
+{% endif %}
+ 
+{% block paragraph %}
+<div{{ attributes.addClass(classes) }} 
+    {% if content.field_css['#items'][0].getString() is not empty %}style="{{ content.field_css['#items'][0].getString() }}"{% endif %}
+    {% if content.field_id['#items'][0].getString() is not empty %}id="{{ content.field_id['#items'][0].getString() }}"{% endif %}
+>
+
+
+    {% if content.field_title.0 is not empty %}
+        <div class="box-title" >
+            {{ content.field_title.0 }}
+            {% if content.field_subtitle.0 is not empty %}
+                <div class="box-subtitle" >{{ content.field_subtitle.0 }}</div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+
+
+    <div class="row row-eq-height">
+
+        {% for key, item in content.field_columns if key|first != '#' %}
+            {{ content.field_columns[loop.index0] }}
+        {% endfor %}
+    
+
+    </div>
+
+</div>
+{% endblock paragraph %}

@@ -1,0 +1,22 @@
+{% if title %}
+	<h5>{{ title }}</h5>
+{% endif %}
+<div class="item-blog row">
+	<div class="image img-container img-container-blog col-2">
+		{{fields.field_blogs_images.content}}
+	</div>
+	<div class="post col">
+		<h5 class="blog-title">
+			{{fields.title.content}}
+		</h5>
+		<div class="blog-content">
+			{{fields.body.content}}
+		</div>
+		<div class="blog-info">
+			{{fields.field_blogs_date_release.content}}|{{fields.field_blogs_authored_by.content}}
+		</div>
+		<div class="blog-link">
+      {{fields.view_node.content}}
+		</div>
+	</div>
+</div>

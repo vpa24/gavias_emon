@@ -1,0 +1,3 @@
+{% if content.field_link.0 is not empty %}
+{% if content.field_language_prefix_flag['#items'][0].getString() == '1' %}{{ language }}{% endif %}{{ content.field_link['#items'][0].getString() }}{% if content.field_language_parameter_flag['#items'][0].getString() == '1' %}{% if '?' in content.field_link['#items'][0].getString() %}{{ langlink|replace({'?': '&'}) }}{% else %}{{ langlink }}{% endif %}{% endif %}
+{% endif %}

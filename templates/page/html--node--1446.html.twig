@@ -1,0 +1,20 @@
+
+
+{% set version =  'v=' ~ '20191105' %}
+
+<link rel="stylesheet" href="/sites/default/files/static/share/enterprise_1.css?{{ version }}" media="all" />
+<link rel="stylesheet" href="/sites/default/files/static/share/enterprise_2.css?{{ version }}" media="all" />
+<link rel="stylesheet" href="/sites/default/files/static/support.css?{{ version }}" media="all" />
+
+{{ page }}
+
+{% if html_attributes.lang == 'zh-hant' %}
+    <script src="/sites/default/files/static/share/json-zh_tw.js?{{ version }}"></script>
+{% elseif html_attributes.lang == 'zh-hans' %}
+    <script src="/sites/default/files/static/share/json-zh_cn.js?{{ version }}"></script>
+{% elseif html_attributes.lang == 'ja' %}
+    <script src="/sites/default/files/static/share/json-ja.js?{{ version }}"></script>
+{% else %}
+    <script src="/sites/default/files/static/share/json-en.js?{{ version }}"></script>
+{% endif %}
+<script src="/sites/default/files/static/share/enterprise_1.js?{{ version }}"></script>

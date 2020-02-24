@@ -1,0 +1,13 @@
+{% set sliderSettings = content.field_settings['#items'][0].getString() %}
+<div class="banner-slider gavias-slider {% if content.field_layout['#items'][0].getString() != 'Box' %}full-width{% endif %}" {{sliderSettings|raw}} 
+     data-dots="true" {% if content.field_autoplay['#items'][0].getString() != '0' %}data-autoplay="true"{% if content.field_autoplay_speed['#items'][0].getString() != '' %} data-autoplayspeed="{{ content.field_autoplay_speed['#items'][0].getString() }}"{% endif %}{% endif %}>
+    <div class="swiper-wrapper">
+        {% for key, item in content.field_banner if key|first != '#' %}
+        	{% if content.field_banner[loop.index0]['#paragraph'].field_hide_flag.value != '1' %}
+	            <div>
+	                {{ content.field_banner[loop.index0] }}
+	            </div>
+	        {% endif %}
+        {% endfor %}
+    </div>
+</div>

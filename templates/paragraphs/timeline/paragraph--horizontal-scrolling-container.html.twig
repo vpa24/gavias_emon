@@ -1,0 +1,58 @@
+{{ attach_library('gavias_emon/horizontal-scrolling') }}
+
+{%
+  set classes = [
+    'paragraph',
+    'paragraph--type--' ~ paragraph.bundle|clean_class,
+    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+    content.field_layout['#items'][0].getString() == 'Full Width' ? 'full-width'
+  ]
+%}
+{% if content.field_classes['#items'][0].getString() is not empty %}
+    {% set classes = classes|merge(content.field_classes['#items'][0].getString()|split(' ')) %}
+{% endif %}
+ 
+{% block paragraph %}
+<div{{ attributes.addClass(classes) }} 
+    {% if content.field_css['#items'][0].getString() is not empty %}style="{{ content.field_css['#items'][0].getString() }}"{% endif %}
+    {% if content.field_id['#items'][0].getString() is not empty %}id="{{ content.field_id['#items'][0].getString() }}"{% endif %}
+>
+
+
+    {% if content.field_title.0 is not empty %}
+        <div class="box-title" >
+            {{ content.field_title.0 }}
+            {% if content.field_subtitle.0 is not empty %}
+                <div class="box-subtitle" >{{ content.field_subtitle.0 }}</div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+
+
+    <div class="hs-wrapper">
+
+        <div id="hsContainer" class="hs-container dragscroll" >
+            <div id="hsContent" class="hs-contents">
+                {{ content.field_content.0 }}
+            </div>
+        </div>
+
+        <div data-content>
+            {{ content.field_content.0 }}    
+        </div>
+
+        <button id="hsAdvancerLeft" class="hs-advancer hs-advancer-left" type="button">
+            <svg class="hs-advancer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 551 1024">
+              <path d="M445.44 38.183L-2.53 512l447.97 473.817 85.857-81.173-409.6-433.23v81.172l409.6-433.23L445.44 38.18z" />
+            </svg>
+        </button>
+        <button id="hsAdvancerRight" class="hs-advancer hs-advancer-right" type="button">
+            <svg class="hs-advancer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 551 1024">
+              <path d="M105.56 985.817L553.53 512 105.56 38.183l-85.857 81.173 409.6 433.23v-81.172l-409.6 433.23 85.856 81.174z" />
+            </svg>
+        </button>        
+    </div>
+
+</div>
+{% endblock paragraph %}

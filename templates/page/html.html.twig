@@ -1,0 +1,70 @@
+{#
+/**
+ * @file
+ * Theme override for the basic structure of a single Drupal page.
+ *
+ * Variables:
+ * - logged_in: A flag indicating if user is logged in.
+ * - root_path: The root path of the current page (e.g., node, admin, user).
+ * - node_type: The content type for the current node, if the page is a node.
+ * - head_title: List of text elements that make up the head_title variable.
+ *   May contain or more of the following:
+ *   - title: The title of the page.
+ *   - name: The name of the site.
+ *   - slogan: The slogan of the site.
+ * - page_top: Initial rendered markup. This should be printed before 'page'.
+ * - page: The rendered page markup.
+ * - page_bottom: Closing rendered markup. This variable should be printed after
+ *   'page'.
+ * - db_offline: A flag indicating if the database is offline.
+ * - placeholder_token: The token for generating head, css, js and js-bottom
+ *   placeholders.
+ *
+ * @see template_preprocess_html()
+ */
+#}
+<!DOCTYPE html>
+<html{{ html_attributes }}>
+  <head> 
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    
+    <head-placeholder token="{{ placeholder_token|raw }}">
+    <title>{{ head_title|safe_join(' | ') }}</title>
+    <css-placeholder token="{{ placeholder_token|raw }}">
+
+    <js-placeholder token="{{ placeholder_token|raw }}">
+
+    {% if customize_css %}
+      <style class="gva-custom-css">{{ customize_css|raw }}</style>
+    {% endif %}  
+
+    <meta name="robots" content="index, follow" />
+    
+  </head>
+  <body{{ attributes }}>
+
+    <a href="#main-content" class="visually-hidden focusable">
+      {{ 'Skip to main content'|t }}
+    </a>
+    {{ page_top }}
+    {{ page }}
+    {{ page_bottom }}
+    <js-bottom-placeholder token="{{ placeholder_token|raw }}">
+    {% if addon_template %}
+      <div class="permission-save-{{ save_customize_permission }}">
+        {% include directory ~ addon_template %}
+      </div>  
+    {% endif %}
+
+    {# Demandbase tracker tag  #}
+    {# Added: 9/17/19; Can remove after 2 weeks, according to Apurva  #}
+    <script>
+    (function(d,b,a,s,e){ var t = b.createElement(a),
+      fs = b.getElementsByTagName(a)[0]; t.async=1; t.id=e; t.src=s;
+      fs.parentNode.insertBefore(t, fs); })
+    (window,document,'script','https://tag.demandbase.com/832bfc0f.min.js','demandbase_js_lib');  
+    </script>
+
+  </body>
+</html>

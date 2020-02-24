@@ -1,0 +1,48 @@
+{{ attach_library('gavias_emon/press_release') }}
+{%
+  set classes = [
+    'node',
+    'node-detail',
+    'node--type-' ~ node.bundle|clean_class,
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+    'clearfix',
+    'news-search-result',    
+  ]
+%}
+
+<article{{ attributes.addClass(classes) }}>
+  <div class="post-block" >
+    <div class="post-meta" >
+      <span class="post-created">{{ content.field_resource_type[0]['#markup']|upper }}</span>
+    </div>      
+    <div class="post-content hover-shadow" >
+        <div class="row">
+            <div class="col-xs-12">
+
+              <h3{{ title_attributes.addClass('post-title') }} >
+                  {% if content.field_resource_type['#items'][0].getString()|lower == 'video' %}
+                    {{ label }}
+                  {% else %}
+                    <a href="{{ content.field_link.0 }}" target="smci">{{ label }}</a>
+                  {% endif %}
+              </h3>
+              <div class="post-description" >
+                {{ content.body }}
+              </div>
+
+              {% if content.field_resource_type['#items'][0].getString()|lower == 'video' %}
+                <div class="image video-thumbnail">
+                  {{ content.field_youtube_video }}
+                </div>
+              {% else %}
+              <a href="{{ content.field_link.0 }}" target="smci" class="smaller semibold" >    
+                <div class="readmore">More <i class="fa fa-angle-right"></i></div>
+              </a>
+              {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+  </div>
+</article>  

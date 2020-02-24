@@ -1,0 +1,105 @@
+.hs-wrapper {
+  position: relative;
+}
+
+.hs-container {
+  /* Make this scrollable when needed */
+  overflow-x: auto;
+  /* We don't want vertical scrolling */
+  overflow-y: hidden;
+  /* For WebKit implementations, provide inertia scrolling */
+  -webkit-overflow-scrolling: touch;
+  /* We don't want internal inline elements to wrap */
+  white-space: nowrap;
+  /* If JS present, let's hide the default scrollbar */
+  /* positioning context for advancers */
+  position: relative;
+  font-size: 0;
+  /* Make an auto-hiding scroller for the 3 people using a IE */
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  /* Remove the default scrollbar for WebKit implementations */
+}
+
+.hs-container::-webkit-scrollbar {
+  display: none;
+}
+
+.hs-contents {
+  float: left;
+  -webkit-transition: -webkit-transform .2s ease-in-out;
+  transition: -webkit-transform .2s ease-in-out;
+  transition: transform .2s ease-in-out;
+  transition: transform .2s ease-in-out, -webkit-transform .2s ease-in-out;
+  position: relative;
+}
+
+.hs-contents-no-transition {
+  -webkit-transition: none;
+  transition: none;
+}
+
+.hs-advancer {
+  /* Reset the button */
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background: transparent;
+  padding: 0;
+  border: 0;
+  /* Now style it as needed */
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  /* Set the buttons invisible by default */
+  opacity: 0;
+  -webkit-transition: opacity .3s;
+  transition: opacity .3s;
+}
+
+.hs-advancer:focus {
+  outline: 0;
+}
+
+.hs-advancer:hover {
+  cursor: pointer;
+}
+
+.hs-advancer-left {
+  left: -50px;
+}
+
+[data-overflowing="both"] ~ .hs-advancer-left, [data-overflowing="left"] ~ .hs-advancer-left {
+  opacity: 1;
+}
+
+.hs-advancer-right {
+  right: -50px;
+}
+
+[data-overflowing="both"] ~ .hs-advancer-right, [data-overflowing="right"] ~ .hs-advancer-right {
+  opacity: 1;
+}
+
+.hs-advancer-icon {
+  width: 20px;
+  height: 44px;
+  fill: #bbb;
+}
+
+
+/* ------------------------------------------ */
+/* mobile */
+/* ------------------------------------------ */
+.hs-wrapper div[data-content] {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .hs-container {
+    display: none;
+  }
+  .hs-wrapper div[data-content] {
+    display: block;
+  }
+
+}

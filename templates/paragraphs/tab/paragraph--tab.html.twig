@@ -1,0 +1,10 @@
+<li {% if content.field_active_flag['#items'][0].getString() == '1' %}class="active"{% endif %}>
+	<a data-filter="{{ content.field_filter.0 }}" href="#">
+		{% if content.field_image.0 is not empty %}
+			<img src="{{ content.field_image.0 }}" class="toggleBtn {% if content.field_active_flag['#items'][0].getString() == '1' %}toggleBtn_On{% else %}toggleBtn_Off{% endif %}">
+            <span class="filter-label">&nbsp;&nbsp;{{ content.field_title.0 }}</span>
+        {% else %}
+			<span class="toggleBtn {% if content.field_active_flag['#items'][0].getString() == '1' %}toggleBtn_On{% else %}toggleBtn_Off{% endif %}">{{ content.field_title.0 }}</span>
+		{% endif %}
+	</a>
+</li>

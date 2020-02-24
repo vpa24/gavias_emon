@@ -1,0 +1,174 @@
+{% if content.field_hide_flag['#items'][0].getString() != '1' %}
+
+{%
+  set classes = [
+    'paragraph',
+    'paragraph--type--' ~ paragraph.bundle|clean_class,
+    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+    (parenttype != 'carousel' and content.field_layout['#items'][0].getString() == 'Full Width') ? 'full-width'
+  ]
+%}
+{% if content.field_classes['#items'][0].getString() is not empty %}
+    {% set classes = classes|merge(content.field_classes['#items'][0].getString()|split(' ')) %}
+{% endif %}
+
+
+{% set videowrapperstyle = '' %}
+{% if paragraph.field_image.entity.fileuri|render is not empty %}
+  {% set videowrapperstyle = 'display: none' %}
+{% endif %}
+
+
+{% block paragraph %}
+<div{{ attributes.addClass(classes) }} 
+  {% if content.field_id['#items'][0].getString() is not empty %}id="{{ content.field_id['#items'][0].getString() }}"{% endif %}
+>
+
+
+    {% if content.field_title.0 is not empty %}
+        <div class="box-title">{{ content.field_title.0 }}</div>
+    {% endif %}
+    {% if content.field_subtitle_html.0 is not empty %}
+        <div class="box-subtitle" >{{ content.field_subtitle_html.0 }}</div>
+    {% endif %}
+
+
+    {% block content %}
+
+
+{#  video player only #}
+{% if content.field_body|render|striptags|trim is empty or content.field_player_position['#items'][0].getString() == 'Text Inside' %}
+<div {% if content.field_height['#items'][0].getString() != '' %}class="embedded-video" style="height: {{ content.field_height['#items'][0].getString() }}px;"{% endif %}>
+    {% if paragraph.field_image.entity.fileuri|render is not empty %}
+        {% if content.field_height['#items'][0].getString() != '' %}
+            <div class="video-thumbnail youtube-thumbnail" style="background: url({{ file_url(paragraph.field_image.entity.fileuri) }}) no-repeat center center">
+              <div class="bg-overlay"></div>              
+              <div class="text">{{ content.field_body }}</div>
+            </div>  
+        {% else %}
+            <div class="video-thumbnail youtube-thumbnail" data-thumb="{{ file_url(paragraph.field_image.entity.fileuri) }}">
+              <div class="text">{{ content.field_body }}</div>
+            </div>  
+        {% endif %}
+    {% endif %}
+
+    <div class="videowrapper" 
+      {% if content.field_css['#items'][0].getString() is not empty or videowrapperstyle != '' %}
+        style="{{ content.field_css['#items'][0].getString() }} {{ videowrapperstyle }}"
+      {% endif %}
+    >
+        <div class="closebtn"></div>
+        {{ content.field_video_player }}
+    </div>
+    {{ content.field_thumbnail_list }}
+</div>
+
+{#  video player and text #}
+{% else %}
+<div class="larger-container gbb-row">
+  <div class="bb-inner default">
+    <div >
+      <div class="row">
+        <div class="row-wrapper clearfix">
+
+            <div class="gsc-column col-lg-5 col-md-5 col-sm-12 col-xs-12">
+              <div class="column-inner  bg-size-cover">
+                <div class="column-content-inner">
+
+
+                  {% if content.field_player_position['#items'][0].getString() == 'Left' %}
+                      <div class="widget gsc-block-drupal title-align-left  hidden-title-on remove-margin-on text-dark">
+
+                          {% if paragraph.field_image.entity.fileuri|render is not empty %}
+                            <div class="video-thumbnail youtube-thumbnail" data-thumb="{{ file_url(paragraph.field_image.entity.fileuri) }}">
+                            </div>  
+                          {% endif %}
+
+                          <div class="videowrapper" 
+                            {% if content.field_css['#items'][0].getString() is not empty 
+                            or videowrapperstyle != '' %}
+                              style="{{ content.field_css['#items'][0].getString() }} {{ videowrapperstyle }}"
+                            {% endif %}
+                          >
+                            {{ content.field_video_player }}
+                          </div>
+
+                          {{ content.field_thumbnail_list }}
+                      </div>
+                  {% else %}
+                      <div class="widget gsc-heading  align-left style-1 text-dark ">
+                          <div class="collateral-type-icon video"></div>
+                          {{ content.field_body }}
+
+                          <a class="smaller semibold"><div class="readmore play-video-action">Play the video <i class="fa fa-angle-right"></i></div></a>
+                      </div>
+                  {% endif %}
+
+
+
+                </div>
+              </div>
+            </div>
+            <div class="gsc-column col-lg-7 col-md-7 col-sm-12 col-xs-12">
+              <div class="column-inner  bg-size-cover">
+                <div class="column-content-inner">
+
+
+                {% if content.field_player_position['#items'][0].getString() == 'Left' %}
+                    <div class="widget gsc-heading  align-left style-1 text-dark ">
+                        <div class="collateral-type-icon video"></div>
+                        {{ content.field_body }}
+
+                          <a class="smaller semibold"><div class="readmore play-video-action">Play the video <i class="fa fa-angle-right"></i></div></a>
+                    </div>
+
+                {% else %}
+                    <div class="widget gsc-block-drupal title-align-left  hidden-title-on remove-margin-on text-dark">
+
+                        {% if paragraph.field_image.entity.fileuri|render is not empty %}
+                            <div class="video-thumbnail youtube-thumbnail" data-thumb="{{ file_url(paragraph.field_image.entity.fileuri) }}">
+                            </div>  
+{#                           
+                          <div class="video-thumbnail">
+                            <img src="{{ file_url(paragraph.field_image.entity.fileuri) }}" style="width:100%">
+                          </div>   #}
+                        {% endif %}
+
+                        <div class="videowrapper" 
+                          {% if content.field_css['#items'][0].getString() is not empty 
+                          or videowrapperstyle != '' %}
+                            style="{{ content.field_css['#items'][0].getString() }} {{ videowrapperstyle }}"
+                          {% endif %}
+                        >
+                          {{ content.field_video_player }}
+                        </div>
+
+                        {{ content.field_thumbnail_list }}
+                    </div>
+                {% endif %}
+
+
+                </div>
+              </div>
+            </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+
+
+
+
+
+
+    {% endblock %}
+  </div>
+{% endblock paragraph %}
+
+
+{% endif %}

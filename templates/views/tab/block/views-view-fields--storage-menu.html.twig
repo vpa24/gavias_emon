@@ -1,0 +1,43 @@
+{#
+{% if fields.field_product_type.content|trim is empty%}
+    <span id="{{ fields.title.content|render|striptags|trim }}">{{ fields.title.content }}</span>
+{% else %}    
+    <li id="{{ fields.title.content|render|striptags|trim }}" {% if fields.path.content|trim in path('<current>') and fields.field_product_type.content|trim is not empty%}class="active"{% endif %} ><a href="{{ fields.path.content }}">{{ fields.title.content|striptags }}</a></li>
+{% endif %}  
+#}
+
+
+{# <li class="{% if fields.path.content|trim in path('<current>') %}active {% endif %}
+           {% if fields.path.content|trim ends with 'superstorage' %}dropdown {% endif %}"  
+ 	       {% if fields.path.content|trim ends with 'superstorage' %}style="z-index: 5;"{% endif %}>
+	<a href="{{ fields.path.content }}" {% if fields.path.content|trim ends with 'superstorage' %}class="dropbtn"{% endif %}>
+		{{ fields.title.content }}
+	</a>
+	{% if fields.path.content|trim ends with 'superstorage' %}
+	  <div class="dropdown-content">
+	  	{% if language == '/en' %}
+		    <a href="{{language}}/products/storage/superstorage/sbb">Storage Bridge Bay</a>
+		    <a href="{{language}}/products/storage/superstorage/drives">Storage Drives</a>
+		    <a href="/products/nfo/files/storage/SBB-HDDCompList.pdf">HDD Compatibility</a>
+		{% elseif language == '/zh_tw' %}
+		    <a href="{{language}}/products/storage/superstorage/sbb">硬碟擴充櫃</a>
+		    <a href="{{language}}/products/storage/superstorage/drives">Storage Drives</a>
+		    <a href="/products/nfo/files/storage/SBB-HDDCompList.pdf">HDD 相容清單</a>
+		{% elseif language == '/zh_cn' %}
+		    <a href="{{language}}/products/storage/superstorage/sbb">硬盘扩充柜</a>
+		    <a href="{{language}}/products/storage/superstorage/drives">Storage Drives</a>
+		    <a href="/products/nfo/files/storage/SBB-HDDCompList.pdf">HDD 相容清单</a>
+		{% elseif language == '/ja' %}
+		    <a href="{{language}}/products/storage/superstorage/sbb">ストレージブリッジベイ</a>
+		    <a href="{{language}}/products/storage/superstorage/drives">Storage Drives</a>
+		    <a href="/products/nfo/files/storage/SBB-HDDCompList.pdf">HDD 互換</a>			
+		{% endif %}    
+	  </div>
+	{% endif %}
+</li> #}
+
+<li {% if fields.path.content|trim in path('<current>') %}class="active"{% endif %}>
+	<a href="{{ fields.path.content }}">
+		{{ fields.title.content }}
+	</a>
+</li>
